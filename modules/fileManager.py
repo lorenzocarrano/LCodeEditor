@@ -11,7 +11,10 @@ class FileManager:
         filesList = []
         for root, dirs, files in os.walk(pathToStart):
             for file in files:
-                filesList.append(os.path.join(root, file))
+                Path = os.path.join(root, file)
+                Path = Path[2:]
+                if not Path.startswith(".git"):
+                    filesList.append(Path)
 
         for file in filesList:
             fileBtn = Button(rootWidget, text=file, font=("Helvetica",10))
