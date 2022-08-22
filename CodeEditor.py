@@ -9,10 +9,10 @@ class Editor:
         root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
 
         self.fViewerFrame = LabelFrame(root)
-        self.fViewerFrame.grid(row=0, column=1, sticky="new")
+        self.fViewerFrame.grid(row=0, column=1, sticky="news")
         self.fViewer = fileViewer.FileViewer(self.fViewerFrame)
         self.fileMngr = FileManager(root, self.fViewer)
-        self.fileMngr.grid(row=0, column=0, sticky="nw")
+        self.fileMngr.grid(row=0, column=0, sticky="nws")
         filesList = self.fileMngr.getFilesList()
         #creating buttons
         for file in filesList:
