@@ -11,7 +11,7 @@ class Editor:
         self.fViewerFrame = LabelFrame(root)
         self.fViewerFrame.grid(row=0, column=1, sticky="new")
         self.fViewer = fileViewer.FileViewer(self.fViewerFrame)
-        self.fileMngr = FileManager(root, self.fViewer, heigth=root.winfo_screenheight())
+        self.fileMngr = FileManager(root, self.fViewer)
         self.fileMngr.grid(row=0, column=0, sticky="nw")
         filesList = self.fileMngr.getFilesList()
         #creating buttons
