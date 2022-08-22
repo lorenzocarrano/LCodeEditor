@@ -2,12 +2,7 @@ import fileViewer
 from fileManager import FileManager
 from tkinter import *
 class Editor:
-    def __init__(self):
-        root = Tk()
-        #root.overrideredirect(True)
-
-        root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
-
+    def __init__(self, root):
         self.fViewerFrame = LabelFrame(root)
         self.fViewerFrame.grid(row=0, column=1, sticky="news")
         self.fViewer = fileViewer.FileViewer(self.fViewerFrame)
@@ -20,7 +15,6 @@ class Editor:
             fileBtn.configure(command=lambda btn = fileBtn: self.openFile(btn))
             fileBtn.pack(anchor="w")
             #fileButtonsList.append(fileBtn) variable deleted
-        root.mainloop()
 
     def openFile(self, button):
         path = button["text"]
