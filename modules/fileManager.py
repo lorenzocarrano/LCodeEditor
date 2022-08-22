@@ -1,28 +1,24 @@
 from tkinter import *
 import os
 import sys
-class FileManager:
-    def __init__(self, rootWidget, fileButtonsList, fileViewerInstance):
-        #rootWidget.
-        #root.winfo_screenwidth()
-        self.fileViewerInstance = fileViewerInstance
+from verticalScrolledFrame import VerticalScrolledFrame
+
+class FileManager(VerticalScrolledFrame):
+    def __init__(self, root, fileViewerInstance, *args, **kw):
+        VerticalScrolledFrame.__init__(self, root, *args, **kw)
         pathToStart = "./"
-        yScrollBar = Scrollbar(rootWidget, orient="vertical")
-        yScrollBar.pack(side=RIGHT, fill='y')
-        filesList = []
+        self.filesList = []
+
+        #filter files in subdirectories
         for root, dirs, files in os.walk(pathToStart):
             for file in files:
                 Path = os.path.join(root, file)
                 Path = Path[2:]
                 if not Path.startswith(".git"):
-                    filesList.append(Path)
+                    self.filesList.append(Path)
 
-        for file in filesList:
-            fileBtn = Button(rootWidget, text=file, font=("Helvetica",10))
-            fileBtn.configure(command=lambda btn = fileBtn: self.openFile(btn))
-            fileBtn.pack(anchor="w")
-
-            fileButtonsList.append(fileBtn)
+    def getFilesList(self):
+        return self.filesList
 
     def openFile(self, button):
         path = button["text"]
