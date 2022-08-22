@@ -2,9 +2,10 @@ from tkinter import *
 import os
 import sys
 class FileManager:
-    def __init__(self, rootWidget):
+    def __init__(self, rootWidget, fileButtonsList, fileViewerInstance):
         #rootWidget.
         #root.winfo_screenwidth()
+        self.fileViewerInstance = fileViewerInstance
         pathToStart = "./"
         yScrollBar = Scrollbar(rootWidget, orient="vertical")
         yScrollBar.pack(side=RIGHT, fill='y')
@@ -18,8 +19,17 @@ class FileManager:
 
         for file in filesList:
             fileBtn = Button(rootWidget, text=file, font=("Helvetica",10))
-            fileBtn.configure(command=lambda btn = fileBtn: openFile(btn))
+            fileBtn.configure(command=lambda btn = fileBtn: self.openFile(btn))
             fileBtn.pack(anchor="w")
 
+            fileButtonsList.append(fileBtn)
+
     def openFile(self, button):
-        pass
+        path = button["text"]
+        try:
+            f = open(path, "r")
+            data = f.read()
+            self.fileViewerInstance.attachFile(path, data)
+        except Exception as e:
+            print(e)
+            return
