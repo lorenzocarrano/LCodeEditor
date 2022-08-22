@@ -9,7 +9,7 @@ def main():
 
     root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
 
-    Editor(root)
+    Editor(root, "./")
     root.mainloop()
 
 if __name__ == "__main__":

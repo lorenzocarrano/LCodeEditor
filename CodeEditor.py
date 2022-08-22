@@ -2,12 +2,13 @@ import fileViewer
 from fileManager import FileManager
 from tkinter import *
 class Editor:
-    def __init__(self, root):
+    def __init__(self, root, workingPath):
         self.fViewerFrame = LabelFrame(root)
         self.fViewerFrame.grid(row=0, column=1, sticky="news")
         self.fViewer = fileViewer.FileViewer(self.fViewerFrame)
         self.fileMngr = FileManager(root, self.fViewer)
         self.fileMngr.grid(row=0, column=0, sticky="nws")
+        self.workingPath = workingPath
         filesList = self.fileMngr.getFilesList()
         #creating buttons
         for file in filesList:
