@@ -4,7 +4,7 @@ import sys
 from verticalScrolledFrame import VerticalScrolledFrame
 
 class FileManager(VerticalScrolledFrame):
-    def __init__(self, root, fileViewerInstance, *args, **kw):
+    def __init__(self, root, *args, **kw):
         VerticalScrolledFrame.__init__(self, root, *args, **kw)
         pathToStart = "./"
         self.filesList = []
@@ -25,7 +25,7 @@ class FileManager(VerticalScrolledFrame):
         try:
             f = open(path, "r")
             data = f.read()
-            self.fileViewerInstance.attachFile(path, data)
+            #self.fileViewerInstance.attachFile(path, data)
         except Exception as e:
             print(e)
             return
