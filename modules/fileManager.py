@@ -19,13 +19,3 @@ class FileManager(VerticalScrolledFrame):
 
     def getFilesList(self):
         return self.filesList
-
-    def openFile(self, button):
-        path = button["text"]
-        try:
-            f = open(path, "r")
-            data = f.read()
-            #self.fileViewerInstance.attachFile(path, data)
-        except Exception as e:
-            print(e)
-            return
