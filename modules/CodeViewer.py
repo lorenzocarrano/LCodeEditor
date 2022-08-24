@@ -94,21 +94,30 @@ class CodeViewer(tk.Frame):
             r"(?P<if>if)" + "|"  # if condition
             r"(?P<for>for)" + "|"  # for loop
             r"(?P<include>#include\s+[\"<]\S+)" + "|"
-            r"(?P<int>int)"  # variable
+            r"(?P<int>\bint\b)" + "|"   # variable
+            r"(?P<float>\bfloat\b)" + "|" #float variable
+            r"(?P<char>\bchar\b)" + "|" #float variable
+            r"(?P<return>\breturn\b)" +  #return
             r"[\s\(]+)"
         )
 
         #apply tags
         for idx, line in enumerate(lines):
             int_tag = f"int_{idx}"
+            float_tag = f"float_{idx}"
+            char_tag = f"char_{idx}"
             for_tag = f"for_{idx}"
             if_tag = f"if_{idx}"
             include_tag = f"include_{idx}"
+            return_tag = f"return_{idx}"
             tags = {
                 int_tag: "blue",
+                float_tag: "blue",
+                char_tag: "blue",
                 for_tag: "green",
                 if_tag: "purple",
                 include_tag: "green",
+                return_tag: "blue"
                 # add new tag here
             }
             self.configure_tags(self.text, tags)
@@ -126,7 +135,7 @@ class CodeViewer(tk.Frame):
         pass
     def _getFileExtension(self, fPath):
         # this will return a tuple of root and extension
-        split_tup = os.path.splitext('my_file.txt')
+        split_tup = os.path.splitext(fPath)
         # extract the file name and extension
         file_name = split_tup[0]
         file_extension = split_tup[1]
