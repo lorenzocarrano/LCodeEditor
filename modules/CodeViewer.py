@@ -9,7 +9,7 @@ class TextLineNumbers(tk.Canvas):
         self.textwidget = text_widget
 
     def redraw(self, *args):
-        '''redraw line numbers'''
+        #redraw line numbers
         self.delete("all")
 
         i = self.textwidget.index("@0,0")
@@ -67,11 +67,7 @@ class CodeViewer(tk.Frame):
 
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
-        '''
-        self.text.insert("end", "one\ntwo\nthree\n")
-        self.text.insert("end", "four\n",("bigfont",))
-        self.text.insert("end", "five\n")
-        '''
+
     def _on_change(self, event):
         self.linenumbers.redraw()
 

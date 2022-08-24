@@ -24,6 +24,7 @@ class FileManager(tk.Frame):
         relpath = os.path.relpath(path)
         abspath = os.path.relpath(path)
         root_node = self.tree.insert('', 'end', text=relpath, open=True)
+        self.rootNodePath = relpath
         #root_node.configure(value=abspath) SBAGLIATO ma l'idea è questa
         self.process_directory(root_node, relpath)
 
@@ -33,11 +34,40 @@ class FileManager(tk.Frame):
         self.grid()
         #bind event on double-click
         self.tree.bind("<Double-1>", self.OnDoubleClick)
+        self.master = master
 
-    def OnDoubleClick(self, p):
-        item = self.tree.selection()[0]
-        print("you clicked on", self.tree.item(item,"text"))
-        print("you clicked on", self.tree.item(item))
+    def OnDoubleClick(self, event):
+        item = self.tree.selection()[0] #clicked item
+        path = self.tree.item(item)["text"]
+        pathReconstructed = False
+        while not pathReconstructed:
+            parent_iid = self.tree.parent(item)
+            parentPath = self.tree.item(parent_iid)["text"]
+            if parentPath == self.rootNodePath:
+                pathReconstructed = True #last append to be performed, then exit while
+
+            path = parentPath + '/' + path
+
+        isdir = os.path.isdir(path)
+        if isdir == True:
+            #if it is a directory, nothing to do
+            pass
+        else:
+            #if it is a file, open it
+            try:
+                self.master.openFile(path)
+            except:
+                pass
+
+        '''
+        print("you clicked on: ", self.tree.item(item,"text"))
+        if parent_iid:
+            print("parent: ", self.tree.item(parent_iid)['text'])
+        else:
+            print("parent: ", self.tree.item(item)['text'])
+        '''
+        #print("you clicked on", self.tree.item(item,"text"))
+        #print("you clicked on", self.tree.item(item))
 
     def process_directory(self, parent, path):
         for p in os.listdir(path):
