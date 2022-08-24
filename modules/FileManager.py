@@ -22,7 +22,9 @@ class FileManager(tk.Frame):
         self.tree.heading('#0', text=path, anchor='w')
 
         relpath = os.path.relpath(path)
+        abspath = os.path.relpath(path)
         root_node = self.tree.insert('', 'end', text=relpath, open=True)
+        #root_node.configure(value=abspath) SBAGLIATO ma l'idea è questa
         self.process_directory(root_node, relpath)
 
         self.tree.grid(row=0, column=0)
@@ -35,6 +37,7 @@ class FileManager(tk.Frame):
     def OnDoubleClick(self, p):
         item = self.tree.selection()[0]
         print("you clicked on", self.tree.item(item,"text"))
+        print("you clicked on", self.tree.item(item))
 
     def process_directory(self, parent, path):
         for p in os.listdir(path):
