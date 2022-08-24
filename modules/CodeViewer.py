@@ -51,7 +51,7 @@ class CodeText(fileViewer.FileViewer):
         # return what the actual widget returned
         return result
 
-class CodePanel(tk.Frame):
+class CodeViewer(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
         self.text = CodeText(self)
@@ -75,7 +75,10 @@ class CodePanel(tk.Frame):
     def _on_change(self, event):
         self.linenumbers.redraw()
 
+    def attachFile(self, fPath, data):
+        self.text.attachFile(fPath, data)
+
 if __name__ == "__main__":
     root = tk.Tk()
-    CodePanel(root).pack(side="top", fill="both", expand=True)
+    CodeViewer(root).pack(side="top", fill="both", expand=True)
     root.mainloop()

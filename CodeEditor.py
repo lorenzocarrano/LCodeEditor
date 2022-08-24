@@ -1,4 +1,4 @@
-import fileViewer
+from CodeViewer import *
 from fileManager import FileManager
 from tkinter import *
 from TabsContainer import *
@@ -19,12 +19,12 @@ class Editor:
 
     def openFile(self, button):
         path = button["text"]
-        fViewer = fileViewer.FileViewer()
+        cViewer = CodeViewer()
         try:
             f = open(path, "r")
             data = f.read()
-            fViewer.attachFile(path, data)
-            self.TabsContainerObject.add(fViewer, text=path)
+            cViewer.attachFile(path, data)
+            self.TabsContainerObject.add(cViewer, text=path)
 
         except Exception as e:
             print(e)
