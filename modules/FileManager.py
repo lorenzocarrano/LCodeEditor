@@ -4,7 +4,7 @@ import tkinter.ttk as ttk
 import tkinter.font as tkFont
 
 class FileManager(tk.Frame):
-    def __init__(self, master, path):
+    def __init__(self, rootWindow, path, containerWidget = ""):
         #defining style
         style = ttk.Style()
         style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=('Calibri', 10)) # Modify the font of the body
@@ -13,7 +13,7 @@ class FileManager(tk.Frame):
         style.configure("myStyle.Tree.Heading", rowwidth=100)
         style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})]) # Remove the borders
         #code
-        tk.Frame.__init__(self, master)
+        tk.Frame.__init__(self, rootWindow)
         self.tree = ttk.Treeview(self, style="mystyle.Treeview")
 
         ysb = ttk.Scrollbar(self, orient='vertical', command=self.tree.yview)
@@ -31,10 +31,10 @@ class FileManager(tk.Frame):
         self.tree.grid(row=0, column=0)
         ysb.grid(row=0, column=1, sticky='ns')
         xsb.grid(row=1, column=0, sticky='ew')
-        self.grid()
+        #self.grid()
         #bind event on double-click
         self.tree.bind("<Double-1>", self.OnDoubleClick)
-        self.master = master
+        self.containerWidget = containerWidget
 
     def OnDoubleClick(self, event):
         item = self.tree.selection()[0] #clicked item
@@ -55,8 +55,9 @@ class FileManager(tk.Frame):
         else:
             #if it is a file, open it
             try:
-                self.master.openFile(path)
-            except:
+                self.containerWidget.openFile(path)
+            except Exception as e:
+                print(e)
                 pass
 
         '''
@@ -76,8 +77,9 @@ class FileManager(tk.Frame):
             oid = self.tree.insert(parent, 'end', text=p, open=False)
             if isdir:
                 self.process_directory(oid, relpath)
-
+'''
 root = tk.Tk()
 path_to_my_project = "./../"
 fManager = FileManager(root, path=path_to_my_project)
 fManager.mainloop()
+'''
