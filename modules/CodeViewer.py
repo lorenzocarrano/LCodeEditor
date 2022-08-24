@@ -23,8 +23,6 @@ class TextLineNumbers(tk.Canvas):
             self.create_text(2,y,anchor="nw", text=linenum)
             i = self.textwidget.index("%s+1line" % i)
 
-
-#class CodeText(fileViewer.FileViewer):
 class CodeText(fileViewer.FileViewer):
     def __init__(self, *args, **kwargs):
         fileViewer.FileViewer.__init__(self, *args, **kwargs)
@@ -145,8 +143,9 @@ class CodeViewer(tk.Frame):
         for tag, color in tags.items():
             text_widget.tag_delete(tag)
             text_widget.tag_config(tag, foreground=color)
-
+'''
 if __name__ == "__main__":
     root = tk.Tk()
     CodeViewer(root).pack(side="top", fill="both", expand=True)
     root.mainloop()
+'''
