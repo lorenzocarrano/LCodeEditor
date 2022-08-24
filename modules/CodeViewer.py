@@ -118,7 +118,7 @@ class CodeViewer(tk.Frame):
                 return_tag: "blue"
                 # add new tag here
             }
-            self.configure_tags(self.text, tags)
+            self._configure_tags(self.text, tags)
 
             for match in regex.finditer(line):
                 for tag in tags:
@@ -139,7 +139,7 @@ class CodeViewer(tk.Frame):
         file_extension = split_tup[1]
         return file_extension
 
-    def configure_tags(self, text_widget, tags):
+    def _configure_tags(self, text_widget, tags):
         for tag, color in tags.items():
             text_widget.tag_delete(tag)
             text_widget.tag_config(tag, foreground=color)
