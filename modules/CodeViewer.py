@@ -1,5 +1,7 @@
 import tkinter as tk
 import fileViewer
+import os
+import re
 class TextLineNumbers(tk.Canvas):
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
@@ -68,11 +70,72 @@ class CodeViewer(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
 
+        self.displayedFile =  ""
+
     def _on_change(self, event):
         self.linenumbers.redraw()
+        self._syntaxSetup()
 
     def attachFile(self, fPath, data):
         self.text.attachFile(fPath, data)
+        self.displayedFile = fPath
+        self._syntaxSetup()
+
+
+    def _syntaxSetup(self):
+        #set the right syntax highlighting depending on detected language
+        #get the file extension
+        fileExtension = self._getFileExtension(self.displayedFile)
+        #get file lines
+        lines = self.text.get(1.0, tk.END).splitlines()
+        #prepare a regular expression (language-dependent)
+        regex = re.compile(
+            r"(^\s*"
+            r"(?P<if>if)" + "|"  # if condition
+            r"(?P<for>for)" + "|"  # for loop
+            r"(?P<include>#include\s+[\"<]\S+)" + "|"
+            r"(?P<int>int)"  # variable
+            r"[\s\(]+)"
+        )
+
+        #apply tags
+        for idx, line in enumerate(lines):
+            int_tag = f"int_{idx}"
+            for_tag = f"for_{idx}"
+            if_tag = f"if_{idx}"
+            include_tag = f"include_{idx}"
+            tags = {
+                int_tag: "blue",
+                for_tag: "green",
+                if_tag: "purple",
+                include_tag: "green",
+                # add new tag here
+            }
+            self.configure_tags(self.text, tags)
+
+            for match in regex.finditer(line):
+                for tag in tags:
+                    group_name = tag.split("_")[0]
+                    if -1 != match.start(group_name):
+                        self.text.tag_add(
+                            tag,
+                            "{0}.{1}".format(idx+1, match.start(group_name)),
+                            "{0}.{1}".format(idx+1, match.end(group_name))
+                        )
+
+        pass
+    def _getFileExtension(self, fPath):
+        # this will return a tuple of root and extension
+        split_tup = os.path.splitext('my_file.txt')
+        # extract the file name and extension
+        file_name = split_tup[0]
+        file_extension = split_tup[1]
+        return file_extension
+
+    def configure_tags(self, text_widget, tags):
+        for tag, color in tags.items():
+            text_widget.tag_delete(tag)
+            text_widget.tag_config(tag, foreground=color)
 
 if __name__ == "__main__":
     root = tk.Tk()
