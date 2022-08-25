@@ -40,13 +40,13 @@ class CodeText(fileViewer.FileViewer):
 
         # generate an event if something was added or deleted,
         # or the cursor position changed
-        if (args[0] in ("insert", "replace", "delete") or
-            args[0:3] == ("mark", "set", "insert") or
-            args[0:2] == ("xview", "moveto") or
-            args[0:2] == ("xview", "scroll") or
-            args[0:2] == ("yview", "moveto") or
-            args[0:2] == ("yview", "scroll")
-        ):
+        if (args[0] in ("insert", "replace", "delete")):# or
+            #args[0:3] == ("mark", "set", "insert") or
+            #args[0:2] == ("xview", "moveto") or
+            #args[0:2] == ("xview", "scroll") or
+            #args[0:2] == ("yview", "moveto") or
+            #args[0:2] == ("yview", "scroll")
+        #):
             self.event_generate("<<Change>>", when="tail")
 
         # return what the actual widget returned
@@ -74,8 +74,10 @@ class CodeViewer(tk.Frame):
     def _on_change(self, event):
         self.linenumbers.redraw()
         self._syntaxSetup()
+        print("OnChange triggered")
 
     def attachFile(self, fPath, data):
+        print("attach file")
         self.text.attachFile(fPath, data)
         self.displayedFile = fPath
         self._syntaxSetup()
