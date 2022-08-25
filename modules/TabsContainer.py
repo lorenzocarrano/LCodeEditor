@@ -13,7 +13,8 @@ class TabsContainer(ttk.Notebook):
 
         kwargs["style"] = "TabsContainer"
         ttk.Notebook.__init__(self, *args, **kwargs)
-
+        #enable key bindings to navigate between tabs
+        self.enable_traversal()
         self._active = None
 
         self.bind("<ButtonPress-1>", self.on_close_press, True)
@@ -41,7 +42,7 @@ class TabsContainer(ttk.Notebook):
             return
 
         index = self.index("@%d,%d" % (event.x, event.y))
-
+        print(self.index)
         if self._active == index:
             self.forget(index)
             self.event_generate("<<NotebookTabClosed>>")
