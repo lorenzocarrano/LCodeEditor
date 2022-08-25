@@ -55,7 +55,9 @@ Pyregex = re.compile(
         r"(?P<if>\bif\b)" + "|"  # if condition
         r"(?P<for>\bfor\b)" + "|"  # for loop
         r"(?P<import>\bimport\b)" + "|"
-        r"(?P<return>\breturn\b)" +  "|"#return
+        r"(?P<return>\breturn\b)" +  "|" #return
+        r"(?P<True>\bTrue\b)" + "|" #True
+        r"(?P<False>\bFalse\b)" + "|" #False
         r"(?P<def>\bdef\b)" + #def
         r"[\s\(]+)"
     )
@@ -67,13 +69,16 @@ def applyPy_Tags(code):
                 import_tag = f"import_{idx}"
                 return_tag = f"return_{idx}"
                 def_tag = f"def_{idx}"
+                True_tag = f"True_{idx}"
+                False_tag = f"False_{idx}"
                 tags = {
                     for_tag: "purple",
                     if_tag: "purple",
                     import_tag: "purple",
                     return_tag: "purple",
-                    def_tag: "purple"
-
+                    def_tag: "purple",
+                    True_tag: "red",
+                    False_tag: "red",
                     # add new tag here
                 }
                 code._configure_tags(code.text, tags)
