@@ -8,9 +8,9 @@ Cregex = re.compile(
         r"(?P<for>\bfor\b)" + "|"  # for loop
         r"(?P<while>\bwhile\b)" + "|"  # while loop
         r"(?P<include>#include\s+[\"<]\S+)" + "|"
-        r"(?P<int>\bint\b)" + "|"   # variable
+        r"(?P<int>\bint\b)" + "|"   # int variable
         r"(?P<float>\bfloat\b)" + "|" #float variable
-        r"(?P<char>\bchar\b)" + "|" #float variable
+        r"(?P<char>\bchar\b)" + "|" #char variable
         r"(?P<return>\breturn\b)" +  #return
         r"[\s\(]+)"
     )
