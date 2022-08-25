@@ -58,6 +58,7 @@ Pyregex = re.compile(
         r"(?P<return>\breturn\b)" +  "|" #return
         r"(?P<True>\bTrue\b)" + "|" #True
         r"(?P<False>\bFalse\b)" + "|" #False
+        r"(?P<CommentedLine>#.*)" + "|" #commented line
         r"(?P<def>\bdef\b)" + #def
         r"[\s\(]+)"
     )
@@ -71,6 +72,7 @@ def applyPy_Tags(code):
                 def_tag = f"def_{idx}"
                 True_tag = f"True_{idx}"
                 False_tag = f"False_{idx}"
+                CommentedLine_tag = f"CommentedLine_{idx}"
                 tags = {
                     for_tag: "purple",
                     if_tag: "purple",
@@ -79,6 +81,7 @@ def applyPy_Tags(code):
                     def_tag: "purple",
                     True_tag: "red",
                     False_tag: "red",
+                    CommentedLine_tag: "gray"
                     # add new tag here
                 }
                 code._configure_tags(code.text, tags)
