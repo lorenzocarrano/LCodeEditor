@@ -6,7 +6,7 @@ class TabsContainer(ttk.Notebook):
 
     __initialized = False
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, containerWidget, *args, **kwargs):
         if not self.__initialized:
             self.__initialize_custom_style()
             self.__inititialized = True
@@ -16,6 +16,8 @@ class TabsContainer(ttk.Notebook):
         #enable key bindings to navigate between tabs
         self.enable_traversal()
         self._active = None
+        self.containerWidget = containerWidget
+        self.indexToEventuallyRemove = -1 #initValue
 
         self.bind("<ButtonPress-1>", self.on_close_press, True)
         self.bind("<ButtonRelease-1>", self.on_close_release)
@@ -42,7 +44,16 @@ class TabsContainer(ttk.Notebook):
             return
 
         index = self.index("@%d,%d" % (event.x, event.y))
-        print(self.index)
+        fileBeingClosed = self.tab(index)["text"]
+        self.containerWidget.CloseFileRequested(fileBeingClosed)
+        self.indexToEventuallyRemove = index
+
+    def removeTab(self, saveFile):
+        if saveFile == True:
+            print("saved")
+        else:
+            print("not saved")
+        index = self.indexToEventuallyRemove
         if self._active == index:
             self.forget(index)
             self.event_generate("<<NotebookTabClosed>>")
