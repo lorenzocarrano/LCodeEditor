@@ -49,6 +49,7 @@ class FileManager(tk.Frame):
                 pathReconstructed = True #last append to be performed, then exit while
 
             path = parentPath + '/' + path
+            item = parent_iid
             print(path)
 
         isdir = os.path.isdir(path)
