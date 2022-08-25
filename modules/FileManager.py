@@ -40,6 +40,8 @@ class FileManager(tk.Frame):
         item = self.tree.selection()[0] #clicked item
         path = self.tree.item(item)["text"]
         pathReconstructed = False
+        print(path)
+        print(self.rootNodePath)
         while not pathReconstructed:
             parent_iid = self.tree.parent(item)
             parentPath = self.tree.item(parent_iid)["text"]
@@ -47,6 +49,7 @@ class FileManager(tk.Frame):
                 pathReconstructed = True #last append to be performed, then exit while
 
             path = parentPath + '/' + path
+            print(path)
 
         isdir = os.path.isdir(path)
         if isdir == True:

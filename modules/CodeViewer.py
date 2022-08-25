@@ -92,7 +92,7 @@ class CodeViewer(tk.Frame):
             regex = regexList[index]
 
             #apply tags
-            applyTagCalls[0](self)
+            applyTagCalls[index](self)
         except:
             pass
     def _getFileExtension(self, fPath):
