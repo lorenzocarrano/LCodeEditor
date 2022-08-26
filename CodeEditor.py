@@ -3,8 +3,9 @@ from FileManager import FileManager
 from tkinter import *
 from TabsContainer import *
 from CascadeMenu import *
-from PopUpFileStatusMessage import *
+from YesNoPopupMessage import *
 import os
+import subprocess
 
 class Editor:
     def __init__(self, root, workingPath):
@@ -37,7 +38,13 @@ class Editor:
 
     def CloseFileRequested(self, path):
         self.FileBeingClosed = path
-        top = PopUpFileStatusMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile)
+        if self.fileModified == True:
+            print("equal")
+            top = YesNoPopupMessage(message="Save changes to file?", containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile)
+        else:
+            print("not equal")
+            self.CloseFile(False)
+
 
 
     def CloseFile(self, save):
@@ -55,7 +62,19 @@ class Editor:
 
 
     def insertInCommandBar(self, event):
-        print("escape pressed")
+        pass
 
     def onClosingWindow(self):
-        print("quit")
+        #remove all .bak files
+        for file in self.openedFiles:
+            os.system("rm " + file + ".bak")
+        #close application
+        self.ContainerWindow.destroy()
+
+    def fileModified(self):
+        #check if .bak file is equal to the original file
+        path = self.FileBeingClosed
+        bakPath = self.FileBeingClosed + ".bak" + " -qsE"
+        command = "diff " + path + " " + bakPath
+        cmpResult = subproces.check_output(command)
+        print(cmpResult)
