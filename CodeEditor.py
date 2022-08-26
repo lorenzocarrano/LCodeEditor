@@ -4,6 +4,7 @@ from tkinter import *
 from TabsContainer import *
 from CascadeMenu import *
 from PopUpFileStatusMessage import *
+import os
 
 class Editor:
     def __init__(self, root, workingPath):
@@ -15,6 +16,8 @@ class Editor:
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
         #bind keys
         root.bind('<Escape>', self.insertInCommandBar)
+        #bind on close window event
+        root.protocol("WM_DELETE_WINDOW", self.onClosingWindow)
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
@@ -39,12 +42,20 @@ class Editor:
 
     def CloseFile(self, save):
         try:
-            self.TabsContainerObject.removeTab(save)
+            self.TabsContainerObject.removeTab()
         except:
             return
-
+        if save == True:
+            cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
+            os.system(cmd)
+        
+        cmd = "rm " + self.FileBeingClosed + ".bak"
+        os.system(cmd)
         self.openedFiles.remove(self.FileBeingClosed)
 
 
     def insertInCommandBar(self, event):
         print("escape pressed")
+
+    def onClosingWindow(self):
+        print("quit")

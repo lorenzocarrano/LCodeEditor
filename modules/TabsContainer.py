@@ -48,11 +48,7 @@ class TabsContainer(ttk.Notebook):
         self.containerWidget.CloseFileRequested(fileBeingClosed)
         self.indexToEventuallyRemove = index
 
-    def removeTab(self, saveFile):
-        if saveFile == True:
-            print("saved")
-        else:
-            print("not saved")
+    def removeTab(self):
         index = self.indexToEventuallyRemove
         if self._active == index:
             self.forget(index)
