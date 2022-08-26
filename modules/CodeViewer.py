@@ -75,6 +75,9 @@ class CodeViewer(tk.Frame):
         self.linenumbers.redraw()
         self._syntaxSetup()
         print("OnChange triggered")
+        #create/update .bak file
+        f = open(self.displayedFile+".bak", "w")
+        f.write(self.text.get("1.0", tk.END))
 
     def attachFile(self, fPath, data):
         print("attach file")
