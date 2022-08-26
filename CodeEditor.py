@@ -77,4 +77,9 @@ class Editor:
         bakPath = self.FileBeingClosed + ".bak" + " -qsE"
         command = "diff " + path + " " + bakPath
         cmpResult = subproces.check_output(command)
-        print(cmpResult)
+        if cmpResult == "differ":
+            print("differ")
+            return True
+        else:
+            print("equal")
+            return False

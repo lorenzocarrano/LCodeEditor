@@ -2,6 +2,7 @@ import tkinter as tk
 import fileViewer
 import os
 import re
+import sys
 from syntaxconf import regexList, applyTagCalls, CExtensionsList, PyExtensionsList
 class TextLineNumbers(tk.Canvas):
     def __init__(self, *args, **kwargs):
@@ -77,7 +78,14 @@ class CodeViewer(tk.Frame):
         print("OnChange triggered")
         #create/update .bak file
         f = open(self.displayedFile+".bak", "w")
-        f.write(self.text.get("1.0", tk.END))
+        #save original stdout
+        originalStdOut = sys.stdout
+        #change stdout to file
+        sys.stdout = f
+        #write data in the file
+        print(self.text.get("1.0", tk.END), "")
+        #restore original stdout
+        sys.stdout = sys.stdout
 
     def attachFile(self, fPath, data):
         print("attach file")
