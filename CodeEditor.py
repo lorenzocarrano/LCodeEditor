@@ -19,6 +19,7 @@ class Editor:
         #bind keys
         root.bind('<Escape>', self.insertInCommandBar)
         root.bind("<Control-s>", self._save)
+        root.bind("<Control-Shift-S>", self._saveAll)
         #bind on close window event
         root.protocol("WM_DELETE_WINDOW", self.onClosingWindow)
         self.ContainerWindow = root
@@ -133,3 +134,8 @@ class Editor:
         #saving the content of .bak file in original one
         cmd = "cat " + filePath + ".bak > " + filePath
         os.system(cmd)
+
+    def _saveAll(self, event):
+        for filePath in self.openedFiles:
+            cmd = "cat " + filePath + ".bak > " + filePath
+            os.system(cmd)
