@@ -5,6 +5,7 @@ from TabsContainer import *
 from CascadeMenu import *
 from YesNoPopupMessage import *
 import os
+import filecmp
 
 class Editor:
     def __init__(self, root, workingPath):
@@ -32,12 +33,14 @@ class Editor:
                 self.TabsContainerObject.add(cViewer, text=path)
                 self.openedFiles.append(path)
             except Exception as e:
-                print(e)
                 return
 
     def CloseFileRequested(self, path):
         self.FileBeingClosed = path
-        top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile, message="Save changes to file?")
+        if self.fileModified() == True:
+            top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile, message="Save changes to file?")
+        else:
+            self.CloseFile(False)
 
 
     def CloseFile(self, save):
@@ -55,8 +58,13 @@ class Editor:
 
 
     def insertInCommandBar(self, event):
-        print("escape pressed")
+        pass
 
     def onClosingWindow(self):
-        print("quit")
         self.ContainerWindow.destroy()
+
+    def fileModified(self):
+        #check if .bak file is equal to the original file
+        path = self.FileBeingClosed
+        bakPath = self.FileBeingClosed + ".bak"
+        return filecmp.cmp(path, bakPath)

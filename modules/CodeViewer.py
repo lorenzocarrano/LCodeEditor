@@ -86,6 +86,7 @@ class CodeViewer(tk.Frame):
         print(self.text.get("1.0", tk.END), "")
         #restore original stdout
         sys.stdout = sys.stdout
+        f.close()
 
     def attachFile(self, fPath, data):
         print("attach file")
