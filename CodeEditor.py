@@ -5,7 +5,6 @@ from TabsContainer import *
 from CascadeMenu import *
 from YesNoPopupMessage import *
 import os
-import subprocess
 
 class Editor:
     def __init__(self, root, workingPath):
@@ -38,13 +37,7 @@ class Editor:
 
     def CloseFileRequested(self, path):
         self.FileBeingClosed = path
-        if self.fileModified == True:
-            print("equal")
-            top = YesNoPopupMessage(message="Save changes to file?", containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile)
-        else:
-            print("not equal")
-            self.CloseFile(False)
-
+        top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile, message="Save changes to file?")
 
 
     def CloseFile(self, save):
@@ -55,31 +48,15 @@ class Editor:
         if save == True:
             cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
             os.system(cmd)
-        
+
         cmd = "rm " + self.FileBeingClosed + ".bak"
         os.system(cmd)
         self.openedFiles.remove(self.FileBeingClosed)
 
 
     def insertInCommandBar(self, event):
-        pass
+        print("escape pressed")
 
     def onClosingWindow(self):
-        #remove all .bak files
-        for file in self.openedFiles:
-            os.system("rm " + file + ".bak")
-        #close application
+        print("quit")
         self.ContainerWindow.destroy()
-
-    def fileModified(self):
-        #check if .bak file is equal to the original file
-        path = self.FileBeingClosed
-        bakPath = self.FileBeingClosed + ".bak" + " -qsE"
-        command = "diff " + path + " " + bakPath
-        cmpResult = subproces.check_output(command)
-        if cmpResult == "differ":
-            print("differ")
-            return True
-        else:
-            print("equal")
-            return False
