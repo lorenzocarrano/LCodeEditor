@@ -18,6 +18,7 @@ class Editor:
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
         #bind keys
         root.bind('<Escape>', self.insertInCommandBar)
+        root.bind("<Control-s>", self._save)
         #bind on close window event
         root.protocol("WM_DELETE_WINDOW", self.onClosingWindow)
         self.ContainerWindow = root
@@ -126,3 +127,6 @@ class Editor:
                 if f1Lines[i] != f2Lines[i]:
                     return True
         return False
+
+    def _save(self, event):
+        pass

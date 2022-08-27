@@ -70,7 +70,6 @@ class CodeViewer(tk.Frame):
 
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
-
         self.displayedFile =  ""
 
     def _on_change(self, event):
@@ -140,6 +139,7 @@ class CodeViewer(tk.Frame):
             return 1
         else:
             return 2
+
 '''
 if __name__ == "__main__":
     root = tk.Tk()
