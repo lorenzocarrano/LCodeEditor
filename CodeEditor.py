@@ -22,6 +22,7 @@ class Editor:
         root.bind("<Control-Shift-S>", self._saveAll)
         #bind on close window event
         root.protocol("WM_DELETE_WINDOW", self.onClosingWindow)
+        root.bind("<Control-Shift-Q>", self.onClosingWindowByKeyword)
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
@@ -78,6 +79,13 @@ class Editor:
             top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.closeSavingAllFiles, message="Some files modified. Save changes?")
         else:
             self.closeSavingAllFiles(False)
+
+    def onClosingWindowByKeyword(self, event):
+        if self.atLeastOneFileModified():
+            top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.closeSavingAllFiles, message="Some files modified. Save changes?")
+        else:
+            self.closeSavingAllFiles(False)
+
     def closeSavingAllFiles(self, save):
         if save == False:
             for file in self.openedFiles:
@@ -129,7 +137,7 @@ class Editor:
                     return True
         return False
 
-    def _save(self, event):
+    def _save(self, event=None):
         filePath = self.TabsContainerObject.getActiveTabText()
         #saving the content of .bak file in original one
         cmd = "cat " + filePath + ".bak > " + filePath
@@ -139,3 +147,7 @@ class Editor:
         for filePath in self.openedFiles:
             cmd = "cat " + filePath + ".bak > " + filePath
             os.system(cmd)
+
+    #def _innest_closingFileEvent(self, event):
+        #filePath = self.TabsContainerObject.getActiveTabText()
+        #self.TabsContainerObject.closeFileRequestByKeyboard(filePath)
