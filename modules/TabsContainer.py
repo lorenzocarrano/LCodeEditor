@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from StdOutManager import StdOutManager
 
 class TabsContainer(ttk.Notebook):
     """A ttk Notebook with close buttons on each tab"""
@@ -49,11 +50,15 @@ class TabsContainer(ttk.Notebook):
         self.indexToEventuallyRemove = index
 
     def removeTab(self):
+        stdoutMngr = StdOutManager()
+        stdoutMngr.stdoutPrint(data="remove Tab", endCharacter="\n")
         index = self.indexToEventuallyRemove
         if self._active == index:
+            stdoutMngr.stdoutPrint(data="removed", endCharacter="\n")
             self.forget(index)
             self.event_generate("<<NotebookTabClosed>>")
 
+        stdoutMngr.stdoutPrint(data="change state and active", endCharacter="\n")
         self.state(["!pressed"])
         self._active = None
 

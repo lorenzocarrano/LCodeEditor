@@ -40,8 +40,6 @@ class FileManager(tk.Frame):
         item = self.tree.selection()[0] #clicked item
         path = self.tree.item(item)["text"]
         pathReconstructed = False
-        print(path)
-        print(self.rootNodePath)
         while not pathReconstructed:
             parent_iid = self.tree.parent(item)
             parentPath = self.tree.item(parent_iid)["text"]
@@ -50,7 +48,6 @@ class FileManager(tk.Frame):
 
             path = parentPath + '/' + path
             item = parent_iid
-            print(path)
 
         isdir = os.path.isdir(path)
         if isdir == True:
@@ -61,7 +58,6 @@ class FileManager(tk.Frame):
             try:
                 self.containerWidget.openFile(path)
             except Exception as e:
-                print(e)
                 pass
 
         '''

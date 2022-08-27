@@ -6,6 +6,7 @@ from CascadeMenu import *
 from YesNoPopupMessage import *
 import os
 import filecmp
+from StdOutManager import StdOutManager
 
 class Editor:
     def __init__(self, root, workingPath):
@@ -36,22 +37,32 @@ class Editor:
                 return
 
     def CloseFileRequested(self, path):
+        stdoutMngr = StdOutManager()
+        stdoutMngr.stdoutPrint(data="closeFIleREQUESTED", endCharacter="\n")
         self.FileBeingClosed = path
+        mod = self.fileModified()
+        stdoutMngr.stdoutPrint(data=mod, endCharacter="\n")
         if self.fileModified() == True:
             top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile, message="Save changes to file?")
         else:
+            stdoutMngr.stdoutPrint(data="no save", endCharacter="\n")
             self.CloseFile(False)
 
 
     def CloseFile(self, save):
+        stdoutMngr = StdOutManager()
         try:
+            stdoutMngr.stdoutPrint(data="try", endCharacter="\n")
             self.TabsContainerObject.removeTab()
         except:
+            stdoutMngr.stdoutPrint(data="except", endCharacter="\n")
             return
         if save == True:
+            stdoutMngr.stdoutPrint(data="save", endCharacter="\n")
             cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
             os.system(cmd)
 
+        stdoutMngr.stdoutPrint(data="removing bak file", endCharacter="\n")
         cmd = "rm " + self.FileBeingClosed + ".bak"
         os.system(cmd)
         self.openedFiles.remove(self.FileBeingClosed)
@@ -65,9 +76,19 @@ class Editor:
 
     def fileModified(self):
         #check if .bak file is equal to the original file
-        path = self.FileBeingClosed
-        bakPath = self.FileBeingClosed + ".bak"
-        stdoutMngr = StdOutManager()
-        cmpResult = filecmp.cmp(path, bakPath)
-        stdoutMngr.stdoutPrint(data=cmpResult, endCharacter="\n")
-        return cmpResult
+        f1Path = self.FileBeingClosed #original file
+        f2Path = self.FileBeingClosed + ".bak" #.bak file to compare
+
+        f = open(f1Path, "r")
+        f1Lines = f.read().splitlines()
+        f.close()
+        f = open(f2Path, "r")
+        f2Lines = f.read().splitlines()
+
+        if len(f1Lines) != len(f2Lines):
+            return True
+        for i in range(len(f1Lines)):
+            if f1Lines[i] != f2Lines[i]:
+                return True
+        return False
+
