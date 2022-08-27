@@ -50,6 +50,7 @@ class TabsContainer(ttk.Notebook):
         self.indexToEventuallyRemove = index
 
     def removeTab(self):
+        flag = False #flag becomes true if the tab is correctly removed
         stdoutMngr = StdOutManager()
         stdoutMngr.stdoutPrint(data="TabsContainer: removeTab invoked", endCharacter="\n")
         index = self.indexToEventuallyRemove
@@ -57,10 +58,12 @@ class TabsContainer(ttk.Notebook):
             stdoutMngr.stdoutPrint(data="TabsContainer: removeTab --> removed", endCharacter="\n")
             self.forget(index)
             self.event_generate("<<NotebookTabClosed>>")
+            flag = True
 
         stdoutMngr.stdoutPrint(data="TabsContainer: removeTab --> change state and active", endCharacter="\n")
         self.state(["!pressed"])
         self._active = None
+        return flag
 
     def __initialize_custom_style(self):
         style = ttk.Style()

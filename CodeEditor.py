@@ -53,7 +53,7 @@ class Editor:
         stdoutMngr = StdOutManager()
         try:
             stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> try", endCharacter="\n")
-            self.TabsContainerObject.removeTab()
+            flag = self.TabsContainerObject.removeTab()
         except:
             stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> except", endCharacter="\n")
             return
@@ -62,10 +62,11 @@ class Editor:
             cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
             os.system(cmd)
 
-        stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> removing bak file", endCharacter="\n")
-        cmd = "rm " + self.FileBeingClosed + ".bak"
-        os.system(cmd)
-        self.openedFiles.remove(self.FileBeingClosed)
+        if flag == True:
+            stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> removing bak file", endCharacter="\n")
+            cmd = "rm " + self.FileBeingClosed + ".bak"
+            os.system(cmd)
+            self.openedFiles.remove(self.FileBeingClosed)
 
 
     def insertInCommandBar(self, event):
