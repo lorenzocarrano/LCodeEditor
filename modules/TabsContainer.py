@@ -65,6 +65,9 @@ class TabsContainer(ttk.Notebook):
         self._active = None
         return flag
 
+    def getActiveTabText(self):
+         return self.tab(self.select())["text"]
+
     def __initialize_custom_style(self):
         style = ttk.Style()
         self.images = (

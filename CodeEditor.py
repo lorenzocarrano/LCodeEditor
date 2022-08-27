@@ -129,4 +129,7 @@ class Editor:
         return False
 
     def _save(self, event):
-        pass
+        filePath = self.TabsContainerObject.getActiveTabText()
+        #saving the content of .bak file in original one
+        cmd = "cat " + filePath + ".bak > " + filePath
+        os.system(cmd)
