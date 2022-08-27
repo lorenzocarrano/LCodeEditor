@@ -51,14 +51,14 @@ class TabsContainer(ttk.Notebook):
 
     def removeTab(self):
         stdoutMngr = StdOutManager()
-        stdoutMngr.stdoutPrint(data="remove Tab", endCharacter="\n")
+        stdoutMngr.stdoutPrint(data="TabsContainer: removeTab invoked", endCharacter="\n")
         index = self.indexToEventuallyRemove
         if self._active == index:
-            stdoutMngr.stdoutPrint(data="removed", endCharacter="\n")
+            stdoutMngr.stdoutPrint(data="TabsContainer: removeTab --> removed", endCharacter="\n")
             self.forget(index)
             self.event_generate("<<NotebookTabClosed>>")
 
-        stdoutMngr.stdoutPrint(data="change state and active", endCharacter="\n")
+        stdoutMngr.stdoutPrint(data="TabsContainer: removeTab --> change state and active", endCharacter="\n")
         self.state(["!pressed"])
         self._active = None
 

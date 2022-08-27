@@ -38,31 +38,31 @@ class Editor:
 
     def CloseFileRequested(self, path):
         stdoutMngr = StdOutManager()
-        stdoutMngr.stdoutPrint(data="closeFIleREQUESTED", endCharacter="\n")
+        stdoutMngr.stdoutPrint(data="CodeEditor: closeFile REQUESTED", endCharacter="\n")
         self.FileBeingClosed = path
         mod = self.fileModified()
         stdoutMngr.stdoutPrint(data=mod, endCharacter="\n")
         if self.fileModified() == True:
             top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.CloseFile, message="Save changes to file?")
         else:
-            stdoutMngr.stdoutPrint(data="no save", endCharacter="\n")
+            stdoutMngr.stdoutPrint(data="CloseFileRequested --> CodeEditor: no save", endCharacter="\n")
             self.CloseFile(False)
 
 
     def CloseFile(self, save):
         stdoutMngr = StdOutManager()
         try:
-            stdoutMngr.stdoutPrint(data="try", endCharacter="\n")
+            stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> try", endCharacter="\n")
             self.TabsContainerObject.removeTab()
         except:
-            stdoutMngr.stdoutPrint(data="except", endCharacter="\n")
+            stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> except", endCharacter="\n")
             return
         if save == True:
-            stdoutMngr.stdoutPrint(data="save", endCharacter="\n")
+            stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> save", endCharacter="\n")
             cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
             os.system(cmd)
 
-        stdoutMngr.stdoutPrint(data="removing bak file", endCharacter="\n")
+        stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> removing bak file", endCharacter="\n")
         cmd = "rm " + self.FileBeingClosed + ".bak"
         os.system(cmd)
         self.openedFiles.remove(self.FileBeingClosed)
