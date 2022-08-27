@@ -16,4 +16,7 @@ class YesNoPopupMessage(Toplevel):
 
     def close(self, save):
         self.closeCallback(save)
-        self.destroy()
+        try:
+            self.destroy()
+        except:
+            pass

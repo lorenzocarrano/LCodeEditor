@@ -48,7 +48,6 @@ class Editor:
             stdoutMngr.stdoutPrint(data="CloseFileRequested --> CodeEditor: no save", endCharacter="\n")
             self.CloseFile(False)
 
-
     def CloseFile(self, save):
         stdoutMngr = StdOutManager()
         try:
@@ -73,32 +72,26 @@ class Editor:
         pass
 
     def onClosingWindow(self):
-        #search for a modified file
-        for file in self.openedFiles:
-            self.FileBeingClosed = file
-            if self.fileModified():
-                #if at least one file has been modified, a callback is invoked to save files in list
-                top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.closeSavingAllFiles, message="Some files modified. Save changes?")
-
-        #at the end, destroy the container window
-        for file in self.openedFiles:
-            #removing .bak file
-            cmd = "rm " + file + ".bak"
-            os.system(cmd)
-
-        self.ContainerWindow.destroy()
-
+        if self.atLeastOneFileModified():
+            top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.closeSavingAllFiles, message="Some files modified. Save changes?")
+        else:
+            self.closeSavingAllFiles(False)
     def closeSavingAllFiles(self, save):
         if save == False:
-            return
+            for file in self.openedFiles:
+                cmd = "rm " + file + ".bak"
+                os.system(cmd)
+            self.ContainerWindow.destroy()
         else:
             for file in self.openedFiles:
                 #saving the content of .bak file in original one
-                cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
+                cmd = "cat " + file + ".bak > " + file
                 os.system(cmd)
+
                 #removing .bak file
-                cmd = "rm " + self.FileBeingClosed + ".bak"
+                cmd = "rm " + file + ".bak"
                 os.system(cmd)
+            self.ContainerWindow.destroy()
 
     def fileModified(self):
         #check if .bak file is equal to the original file
@@ -118,3 +111,18 @@ class Editor:
                 return True
         return False
 
+    def atLeastOneFileModified(self):
+        for file in self.openedFiles:
+            f1Path = file #original file
+            f2Path = file + ".bak" #.bak file to compare
+            f = open(f1Path, "r")
+            f1Lines = f.read().splitlines()
+            f.close()
+            f = open(f2Path, "r")
+            f2Lines = f.read().splitlines()
+            if len(f1Lines) != len(f2Lines):
+                return True
+            for i in range(len(f1Lines)):
+                if f1Lines[i] != f2Lines[i]:
+                    return True
+        return False
