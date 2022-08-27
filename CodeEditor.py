@@ -67,4 +67,7 @@ class Editor:
         #check if .bak file is equal to the original file
         path = self.FileBeingClosed
         bakPath = self.FileBeingClosed + ".bak"
-        return filecmp.cmp(path, bakPath)
+        stdoutMngr = StdOutManager()
+        cmpResult = filecmp.cmp(path, bakPath)
+        stdoutMngr.stdoutPrint(data=cmpResult, endCharacter="\n")
+        return cmpResult

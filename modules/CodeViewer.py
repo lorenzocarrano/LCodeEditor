@@ -4,6 +4,7 @@ import os
 import re
 import sys
 from syntaxconf import regexList, applyTagCalls, CExtensionsList, PyExtensionsList
+from StdOutManager import StdOutManager
 class TextLineNumbers(tk.Canvas):
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
@@ -77,16 +78,28 @@ class CodeViewer(tk.Frame):
         self._syntaxSetup()
         print("OnChange triggered")
         #create/update .bak file
+        stdoutMngr = StdOutManager()
+        lines = self.text.get("1.0", tk.END).splitlines()
+        nLines = len(lines)
         f = open(self.displayedFile+".bak", "w")
-        #save original stdout
-        originalStdOut = sys.stdout
-        #change stdout to file
-        sys.stdout = f
-        #write data in the file
-        print(self.text.get("1.0", tk.END), "")
-        #restore original stdout
-        sys.stdout = sys.stdout
         f.close()
+        count = 0
+        for line in lines:
+            if count == nLines-1:
+                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile+".bak", mode="a", endCharacter="")
+            else:
+                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile+".bak", mode="a", endCharacter="\n")
+            count = count +1
+        #f = open(self.displayedFile+".bak", "w")
+        ##save original stdout
+        #originalStdOut = sys.stdout
+        ##change stdout to file
+        #sys.stdout = f
+        ##write data in the file
+        #print(self.text.get("1.0", tk.END), "")
+        ##restore original stdout
+        #sys.stdout = sys.stdout
+        #f.close()
 
     def attachFile(self, fPath, data):
         print("attach file")
