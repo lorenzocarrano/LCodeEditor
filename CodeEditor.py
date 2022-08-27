@@ -73,7 +73,32 @@ class Editor:
         pass
 
     def onClosingWindow(self):
+        #search for a modified file
+        for file in self.openedFiles:
+            self.FileBeingClosed = file
+            if self.fileModified():
+                #if at least one file has been modified, a callback is invoked to save files in list
+                top = YesNoPopupMessage(containerWidget=self.ContainerWindow, linkedWidget=self, closeCallback=self.closeSavingAllFiles, message="Some files modified. Save changes?")
+
+        #at the end, destroy the container window
+        for file in self.openedFiles:
+            #removing .bak file
+            cmd = "rm " + file + ".bak"
+            os.system(cmd)
+
         self.ContainerWindow.destroy()
+
+    def closeSavingAllFiles(self, save):
+        if save == False:
+            return
+        else:
+            for file in self.openedFiles:
+                #saving the content of .bak file in original one
+                cmd = "cat " + self.FileBeingClosed + ".bak > " + self.FileBeingClosed
+                os.system(cmd)
+                #removing .bak file
+                cmd = "rm " + self.FileBeingClosed + ".bak"
+                os.system(cmd)
 
     def fileModified(self):
         #check if .bak file is equal to the original file
