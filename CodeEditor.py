@@ -12,7 +12,7 @@ class Editor:
     def __init__(self, root, workingPath):
         self.TabsContainerObject = TabsContainer(self)
         self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
-        self.fileMngr = FileManager(root, "./", self)
+        self.fileMngr = FileManager(root, workingPath, self)
         self.fileMngr.pack(side=LEFT, anchor=N)
         self.workingPath = workingPath
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
