@@ -2,20 +2,27 @@ import sys
 sys.path.insert(0, '../conf')
 import editortheme as et
 import tkinter as tk
+import sys
+sys.path.insert(0, '../conf')
 import fileViewer
 import os
 import re
-import sys
 from syntaxconf import regexList, applyTagCalls, CExtensionsList, PyExtensionsList
 from StdOutManager import StdOutManager
 
 class TextLineNumbers(tk.Canvas):
     def __init__(self, *args, **kwargs):
-        tk.Canvas.__init__(self, *args, **kwargs)
+        try:
+            kwargs["bg"] = et.SelectedTheme["LinesBG"]
+            #kwargs["foreground"] = et.SelectedTheme["CodeLinesColorFG"]
+            tk.Canvas.__init__(self, *args, **kwargs)
+        except Exception as e:
+            print(e)
         self.textwidget = None
 
     def attach(self, text_widget):
         self.textwidget = text_widget
+
 
     def redraw(self, *args):
         #redraw line numbers
@@ -27,7 +34,9 @@ class TextLineNumbers(tk.Canvas):
             if dline is None: break
             y = dline[1]
             linenum = str(i).split(".")[0]
-            self.create_text(2,y,anchor="nw", text=linenum)
+
+            self.create_text(2,y,anchor="nw", text=linenum, font=et.SelectedTheme["CodeLinesNumberFONT"], fill=et.SelectedTheme["CodeLinesColorFG"])
+
             i = self.textwidget.index("%s+1line" % i)
 
 class CodeText(fileViewer.FileViewer):
