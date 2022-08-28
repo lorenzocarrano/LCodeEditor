@@ -1,3 +1,4 @@
+import editortheme as et
 import os
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -7,10 +8,10 @@ class FileManager(tk.Frame):
     def __init__(self, rootWindow, path, containerWidget = ""):
         #defining style
         style = ttk.Style()
-        style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=('Calibri', 10)) # Modify the font of the body
-        style.configure('Treeview', rowheight=40)
-        style.configure("mystyle.Treeview.Heading", font=('Calibri', 8,'bold')) # Modify the font of the headings
-        style.configure("myStyle.Tree.Heading", rowwidth=100)
+        style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=et.SelectedTheme["FileManagerTextFONT"], foreground=et.SelectedTheme["FileManagerTextFG"], background=et.SelectedTheme["FileManagerTextBG"]) # Modify the font of the body
+        style.configure('Treeview', rowheight=et.SelectedTheme["FileManagerROW_HEIGHT"])
+        style.configure("mystyle.Treeview.Heading", font=et.SelectedTheme["FileManagerHeaderTextFONT"], foreground=et.SelectedTheme["FileManagerHeaderTextFG"], background=et.SelectedTheme["FileManagerHeaderTextBG"]) # Modify the font of the headings
+        style.configure("myStyle.Tree.Heading", rowwidth=et.SelectedTheme["FileManagerROW_WIDTH"])
         style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})]) # Remove the borders
         #code
         tk.Frame.__init__(self, rootWindow)
