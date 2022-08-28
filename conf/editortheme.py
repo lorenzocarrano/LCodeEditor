@@ -50,16 +50,16 @@ DarkTheme = {
 
 CustomTheme1 = {
     #color palette
-    "MainWindowBG": "#0b2b2d",
-    "EditorBG": "#0b2b2d",
-    "LinesBG": "#0b2b2d",
-    "CodeTextColorFG": "#c3ce4e",
+    "MainWindowBG": "#393C4D",
+    "EditorBG": "#393C4D",
+    "LinesBG": "#4D4D4D",
+    "CodeTextColorFG": "#F2F2F2",
     "CodeLinesColorFG": "#ff7f50",
     "FileManagerHeaderTextBG": "light gray",
     "FileManagerHeaderTextFG": "black",
-    "FileManagerTextBG": "light gray",
+    "FileManagerTextBG": "#C4C6D6",
     "FileManagerTextFG": "black",
-    "TabsBG": "light gray",
+    "TabsBG": "#C4C6D6",
     "TabsFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
@@ -73,4 +73,4 @@ CustomTheme1 = {
 }
 
 #change the following line to select a theme
-SelectedTheme = DefaultTheme
+SelectedTheme = CustomTheme1
