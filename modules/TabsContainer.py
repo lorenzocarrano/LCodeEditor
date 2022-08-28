@@ -26,6 +26,8 @@ class TabsContainer(ttk.Notebook):
         self.bind("<ButtonPress-1>", self.on_close_press, True)
         self.bind("<ButtonRelease-1>", self.on_close_release)
 
+        ttk.Style().configure("TabsContainer", background=et.SelectedTheme["MainWindowBG"])
+
     def on_close_press(self, event):
         """Called when the button is pressed over the close button"""
 

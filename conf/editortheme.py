@@ -1,7 +1,7 @@
 #DefaultColorPalette
 DefaultTheme = {
     #color palette
-    "rootBG": "light gray",
+    "MainWindowBG": "light gray",
     "EditorBG": "white",
     "LinesBG": "light gray",
     "CodeTextColorFG": "black",
@@ -22,7 +22,7 @@ DefaultTheme = {
 
 DarkTheme = {
     #color palette
-    "rootBG": "gray",
+    "MainWindowBG": "gray",
     "EditorBG": "black",
     "LinesBG": "gray",
     "CodeTextColorFG": "white",
@@ -44,7 +44,7 @@ DarkTheme = {
 
 CustomTheme1 = {
     #color palette
-    "rootBG": "#0b2b2d",
+    "MainWindowBG": "#0b2b2d",
     "EditorBG": "#0b2b2d",
     "LinesBG": "#0b2b2d",
     "CodeTextColorFG": "#c3ce4e",
