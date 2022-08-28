@@ -72,4 +72,5 @@ CustomTheme1 = {
     "FileManagerROW_WIDTH": 100
 }
 
+#change the following line to select a theme
 SelectedTheme = DefaultTheme
