@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '../conf')
+import editortheme as et
 import tkinter as tk
 import fileViewer
 import os
@@ -5,6 +8,7 @@ import re
 import sys
 from syntaxconf import regexList, applyTagCalls, CExtensionsList, PyExtensionsList
 from StdOutManager import StdOutManager
+
 class TextLineNumbers(tk.Canvas):
     def __init__(self, *args, **kwargs):
         tk.Canvas.__init__(self, *args, **kwargs)
@@ -57,7 +61,9 @@ class CodeText(fileViewer.FileViewer):
 class CodeViewer(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
-        self.text = CodeText(self)
+
+        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"])
+
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)
         self.text.tag_configure("bigfont", font=("Helvetica", "24", "bold"))

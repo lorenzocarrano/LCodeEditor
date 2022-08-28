@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '../conf')
+import editortheme as et
 import tkinter as tk
 from tkinter import ttk
 from StdOutManager import StdOutManager
