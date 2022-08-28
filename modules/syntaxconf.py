@@ -26,14 +26,14 @@ def applyC_Tags(code):
                 include_tag = f"include_{idx}"
                 return_tag = f"return_{idx}"
                 tags = {
-                    int_tag: "blue",
-                    float_tag: "blue",
-                    char_tag: "blue",
-                    for_tag: "green",
-                    while_tag: "green",
-                    if_tag: "purple",
+                    int_tag: "#6B6BBC",
+                    float_tag: "#6B6BBC",
+                    char_tag: "#6B6BBC",
+                    for_tag: "orange",
+                    while_tag: "orange",
+                    if_tag: "orange",
                     include_tag: "green",
-                    return_tag: "blue"
+                    return_tag: "orange"
                     # add new tag here
                 }
                 code._configure_tags(code.text, tags)
@@ -74,11 +74,11 @@ def applyPy_Tags(code):
                 False_tag = f"False_{idx}"
                 CommentedLine_tag = f"CommentedLine_{idx}"
                 tags = {
-                    for_tag: "purple",
-                    if_tag: "purple",
-                    import_tag: "purple",
-                    return_tag: "purple",
-                    def_tag: "purple",
+                    for_tag: "orange",
+                    if_tag: "orange",
+                    import_tag: "orange",
+                    return_tag: "orange",
+                    def_tag: "orange",
                     True_tag: "red",
                     False_tag: "red",
                     CommentedLine_tag: "gray"
