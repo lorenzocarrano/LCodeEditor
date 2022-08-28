@@ -3,6 +3,7 @@ sys.path.insert(0, '../conf')
 import editortheme as et
 import tkinter as tk
 from tkinter import ttk
+from tkinter import font
 from StdOutManager import StdOutManager
 
 class TabsContainer(ttk.Notebook):
@@ -117,6 +118,9 @@ class TabsContainer(ttk.Notebook):
             ]
         })
     ])
+
+        style.configure("TabsContainer.Tab", background=et.SelectedTheme["TabsBG"], foreground=et.SelectedTheme["TabsFG"], font=et.SelectedTheme["TabsFONT"])
+        #print(style.lookup("TabsContainer.Tab", "font")) to print currently set font in syle
 '''
 if __name__ == "__main__":
     root = tk.Tk()

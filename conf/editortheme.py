@@ -10,11 +10,14 @@ DefaultTheme = {
     "FileManagerHeaderTextFG": "black",
     "FileManagerTextBG": "white",
     "FileManagerTextFG": "black",
+    "TabsBG": "light gray",
+    "TabsFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
     "FileManagerHeaderTextFONT": ('Calibri', 8,'bold'),
     "FileManagerTextFONT": ('Calibri', 10),
+    "TabsFONT": "TkDefaultFont",
     #sizes
     "FileManagerROW_HEIGHT": 40,
     "FileManagerROW_WIDTH": 100
@@ -31,11 +34,14 @@ DarkTheme = {
     "FileManagerHeaderTextFG": "black",
     "FileManagerTextBG": "light gray",
     "FileManagerTextFG": "black",
+    "TabsBG": "light gray",
+    "TabsFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
     "FileManagerHeaderTextFONT": ('Calibri', 8,'bold'),
     "FileManagerTextFONT": ('Calibri', 10),
+    "TabsFONT": "TkDefaultFont",
     #sizes
     "FileManagerROW_HEIGHT": 40,
     "FileManagerROW_WIDTH": 100
@@ -53,11 +59,14 @@ CustomTheme1 = {
     "FileManagerHeaderTextFG": "black",
     "FileManagerTextBG": "light gray",
     "FileManagerTextFG": "black",
+    "TabsBG": "light gray",
+    "TabsFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
     "FileManagerHeaderTextFONT": ('Calibri', 8,'bold'),
     "FileManagerTextFONT": ('Calibri', 10),
+    "TabsFONT": "TkDefaultFont",
     #sizes
     "FileManagerROW_HEIGHT": 40,
     "FileManagerROW_WIDTH": 100
