@@ -13,6 +13,11 @@ if et.SelectedTheme == et.DefaultTheme:
             r"(?P<int>\bint\b)" + "|"   # int variable
             r"(?P<float>\bfloat\b)" + "|" #float variable
             r"(?P<char>\bchar\b)" + "|" #char variable
+            r"(?P<number>[0-9]+)" + "|" #numbers
+            r"(?P<plusOperator>[\+]+)" + "|" #plusOperator
+            r"(?P<minusOperator>[\-]+)" + "|" #minusOperator
+            r"(?P<multOperator>[\*]+)" + "|" #multOperator
+            r"(?P<divOperator>[\/]+)" + "|" #divOperator
             r"(?P<return>\breturn\b)" +  #return
             r"[\s\(]+)"
         )
@@ -26,6 +31,11 @@ if et.SelectedTheme == et.DefaultTheme:
             while_tag = f"while_{idx}"
             if_tag = f"if_{idx}"
             include_tag = f"include_{idx}"
+            number_tag = f"number_{idx}"
+            plusOperator_tag = f"plusOperator_{idx}"
+            minusOperator_tag = f"minusOperator_{idx}"
+            multOperator_tag = f"multOperator_{idx}"
+            divOperator_tag = f"divOperator_{idx}"
             return_tag = f"return_{idx}"
             tags = {
                 int_tag: "blue",
@@ -35,6 +45,11 @@ if et.SelectedTheme == et.DefaultTheme:
                 while_tag: "green",
                 if_tag: "purple",
                 include_tag: "green",
+                number_tag: "red",
+                plusOperator_tag: "purple",
+                minusOperator_tag: "purple",
+                multOperator_tag: "purple",
+                divOperator_tag: "purple",
                 return_tag: "blue"
                 # add new tag here
             }
@@ -108,6 +123,11 @@ else:
             r"(?P<int>\bint\b)" + "|"   # int variable
             r"(?P<float>\bfloat\b)" + "|" #float variable
             r"(?P<char>\bchar\b)" + "|" #char variable
+            r"(?P<number>[0-9]+)" + "|" #numbers
+            r"(?P<plusOperator>[\+]+)" + "|" #plusOperator
+            r"(?P<minusOperator>[\-]+)" + "|" #minusOperator
+            r"(?P<multOperator>[\*]+)" + "|" #multOperator
+            r"(?P<divOperator>[\/]+)" + "|" #divOperator
             r"(?P<return>\breturn\b)" +  #return
             r"[\s\(]+)"
         )
@@ -121,6 +141,11 @@ else:
             while_tag = f"while_{idx}"
             if_tag = f"if_{idx}"
             include_tag = f"include_{idx}"
+            number_tag = f"number_{idx}"
+            plusOperator_tag = f"plusOperator_{idx}"
+            minusOperator_tag = f"minusOperator_{idx}"
+            multOperator_tag = f"multOperator_{idx}"
+            divOperator_tag = f"divOperator_{idx}"
             return_tag = f"return_{idx}"
             tags = {
                 int_tag: "#6B6BBC",
@@ -130,6 +155,11 @@ else:
                 while_tag: "orange",
                 if_tag: "orange",
                 include_tag: "green",
+                number_tag: "orange",
+                plusOperator_tag: "gray",
+                minusOperator_tag: "gray",
+                multOperator_tag: "gray",
+                divOperator_tag: "gray",
                 return_tag: "orange"
                 # add new tag here
             }
