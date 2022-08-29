@@ -73,4 +73,4 @@ CustomTheme1 = {
 }
 
 #change the following line to select a theme
-SelectedTheme = CustomTheme1
+SelectedTheme = DefaultTheme
