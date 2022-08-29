@@ -66,7 +66,7 @@ CustomTheme1 = {
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
     "FileManagerHeaderTextFONT": ('Calibri', 8,'bold'),
     "FileManagerTextFONT": ('Calibri', 10),
-    "TabsFONT": "TkDefaultFont",
+    "TabsFONT": ("Courier New", 10),
     #sizes
     "FileManagerROW_HEIGHT": 40,
     "FileManagerROW_WIDTH": 100

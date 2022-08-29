@@ -1,10 +1,11 @@
 import sys
-sys.path.insert(0, './modules')
-sys.path.insert(1, './modules/primitives')
-sys.path.insert(2, './conf')
+sys.path.insert(0, '/home/lorenzo/src/PythonApps/CodeEditor/modules')
+sys.path.insert(1, '/home/lorenzo/src/PythonApps/CodeEditor/modules/primitives')
+sys.path.insert(2, '/home/lorenzo/src/PythonApps/CodeEditor/conf')
 from tkinter import *
 from CodeEditor import Editor
 import editortheme as et
+from tkinter import filedialog
 
 def main():
     if len(sys.argv) == 1:
@@ -12,8 +13,9 @@ def main():
     elif len(sys.argv) == 2:
         if sys.argv[1] == '-O':
             #Open file browser and chose a path?
-            return
-        pathToStart = sys.argv[1]
+            pathToStart = filedialog.askdirectory()
+        else:
+            pathToStart = sys.argv[1]
     else:
         print('uncorrect parameters number')
         return
