@@ -18,7 +18,7 @@ class Editor:
         self.workingPath = workingPath
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
         #bind keys
-        root.bind('<Escape>', self.insertInCommandBar)
+        root.bind('<Escape>', self.closeCurrentFile)
         root.bind("<Control-s>", self._save)
         root.bind("<Control-Shift-S>", self._saveAll)
         #bind on close window event
@@ -73,7 +73,7 @@ class Editor:
             self.openedFiles.remove(self.FileBeingClosed)
 
 
-    def insertInCommandBar(self, event):
+    def closeCurrentFile(self, event):
         pass
 
     def onClosingWindow(self):
