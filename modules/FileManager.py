@@ -36,6 +36,7 @@ class FileManager(tk.Frame):
         #bind event on double-click
         self.tree.bind("<Double-1>", self.OnDoubleClick)
         self.containerWidget = containerWidget
+        self.startingPath=path
 
     def OnDoubleClick(self, event):
         item = self.tree.selection()[0] #clicked item
