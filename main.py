@@ -1,7 +1,7 @@
 import sys
-sys.path.insert(0, '/home/lorenzo/src/PythonApps/CodeEditor/modules')
-sys.path.insert(1, '/home/lorenzo/src/PythonApps/CodeEditor/modules/primitives')
-sys.path.insert(2, '/home/lorenzo/src/PythonApps/CodeEditor/conf')
+sys.path.insert(0, './modules')
+sys.path.insert(1, './modules/primitives')
+sys.path.insert(2, './conf')
 from tkinter import *
 from CodeEditor import Editor
 import editortheme as et
