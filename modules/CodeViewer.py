@@ -81,6 +81,21 @@ class CodeText(fileViewer.FileViewer):
                 self.tag_add('found', idx, lastidx)
                 idx = lastidx
             self.tag_config('found', foreground=et.SelectedTheme["SearchedTextFG"], background=et.SelectedTheme["SearchedTextBG"])
+
+    def getPatternOccurrencies(self, pattern):
+        ser = pattern
+        stdoutMngr = StdOutManager()
+        if ser:
+            idx = '1.0'
+            while 1:
+                idx = self.search(ser, idx, nocase=1,
+                                stopindex=tk.END)
+                if not idx: break
+                lastidx = '%s+%dc' % (idx, len(ser))
+                idx = lastidx
+
+                stdoutMngr.stdoutPrint(data=lastidx, endCharacter='\n')
+        pass
 '''
     def highlightExactMatches(self, pattern):
         self.tag_remove('foundExact', '1.0', tk.END)
@@ -153,6 +168,10 @@ class CodeViewer(tk.Frame):
         self.text.highlightMatches(pattern)
         #self.text.highlightExactMatches(pattern)
 
+    def getPatternOccurrencies(self, pattern):
+        #return a list of tuples containing the pattern's matches
+        self.text.getPatternOccurrencies(pattern)
+        pass
 
     def _syntaxSetup(self):
         #set the right syntax highlighting depending on detected language

@@ -78,6 +78,11 @@ class TabsContainer(ttk.Notebook):
         activeObject = self.nametowidget(self.select()) #retrieve widget inside active tab
         activeObject.searchPattern(pattern)
 
+    def searchPatternInOpenedFiles(self, pattern):
+        for tabName in self.tabs():
+            activeObject = self.nametowidget(tabName) #retrieve widget inside active tab
+            activeObject.getPatternOccurrencies(pattern)
+
     def __initialize_custom_style(self):
         style = ttk.Style()
         self.images = (

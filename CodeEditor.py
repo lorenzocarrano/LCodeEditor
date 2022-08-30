@@ -140,13 +140,14 @@ class Editor:
         return False
 
     def onSearchPattern(self, event):
-        SearchWindow = EntryPanel(self.ContainerWindow, text1="Search in current file", text2="Search in all files   ", callback1=self.searchInCurrentFile, callback2=self.searchInAllFiles)
+        #SearchWindow = EntryPanel(self.ContainerWindow, text1="Search in current file", text2="Search in all files   ", callback1=self.searchInCurrentFile, callback2=self.searchInOpenedFiles)
+        SearchWindow = EntryPanel(self.ContainerWindow, text1="Search in current file", text2="Search in opened files", callback1=self.searchInCurrentFile, callback2=self.searchInOpenedFiles)
 
     def searchInCurrentFile(self, pattern):
         self.TabsContainerObject.searchPatternInCurrentFile(pattern)
 
-    def searchInAllFiles(self, pattern):
-        pass
+    def searchInOpenedFiles(self, pattern):
+        self.TabsContainerObject.searchPatternInOpenedFiles(pattern)
 
     def _save(self, event=None):
         filePath = self.TabsContainerObject.getActiveTabText()
