@@ -4,6 +4,7 @@ from tkinter import *
 from TabsContainer import *
 from CascadeMenu import *
 from YesNoPopupMessage import *
+from EntryPanel import *
 import os
 import filecmp
 #from StdOutManager import StdOutManager
@@ -138,9 +139,14 @@ class Editor:
                     return True
         return False
 
-    def onSearchPattern():
-        SearchWindow = Toplevel(self.ContainerWindow)
-        searchEntry = Entry()
+    def onSearchPattern(self, event):
+        SearchWindow = EntryPanel(self.ContainerWindow, text1="Search in current file", text2="Search in all files   ", callback1=self.searchInCurrentFile, callback2=self.searchInAllFiles)
+        pass
+
+    def searchInCurrentFile(self):
+        pass
+
+    def searchInAllFiles(self):
         pass
 
     def _save(self, event=None):
