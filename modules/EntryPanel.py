@@ -3,7 +3,7 @@ class EntryPanel(Toplevel):
     def __init__(self, containerWidget, name, labels, callbacks):
         Toplevel.__init__(self, containerWidget)
         self.title(name)
-
+        self.bind('<Escape>', self.closePanel)
         if len(labels) == len(callbacks):
             self.patternEntry = Entry(self, width=50)
             self.patternEntry.pack(side=TOP, expand=True, fill=X)
@@ -17,6 +17,9 @@ class EntryPanel(Toplevel):
 
     def invokeCallback(self, callback, btn):
         callback(self.patternEntry.get())
+
+    def closePanel(self, event):
+        self.destroy()
 
 '''
 TEST FOR EntryPanel
