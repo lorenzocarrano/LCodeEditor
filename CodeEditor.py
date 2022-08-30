@@ -23,6 +23,7 @@ class Editor:
         #bind on close window event
         root.protocol("WM_DELETE_WINDOW", self.onClosingWindow)
         root.bind("<Control-Shift-Q>", self.onClosingWindowByKeyword)
+        root.bind("<Control-f>", self.onSearchPattern)
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
@@ -136,6 +137,11 @@ class Editor:
                 if f1Lines[i] != f2Lines[i]:
                     return True
         return False
+
+    def onSearchPattern():
+        SearchWindow = Toplevel(self.ContainerWindow)
+        searchEntry = Entry()
+        pass
 
     def _save(self, event=None):
         filePath = self.TabsContainerObject.getActiveTabText()
