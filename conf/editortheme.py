@@ -12,6 +12,8 @@ DefaultTheme = {
     "FileManagerTextFG": "black",
     "TabsBG": "light gray",
     "TabsFG": "black",
+    "SearchedTextBG": "yellow",
+    "SearchedTextFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -36,6 +38,8 @@ DarkTheme = {
     "FileManagerTextFG": "black",
     "TabsBG": "light gray",
     "TabsFG": "black",
+    "SearchedTextBG": "red",
+    "SearchedTextFG": "white",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -61,6 +65,8 @@ CustomTheme1 = {
     "FileManagerTextFG": "black",
     "TabsBG": "#9191A8",
     "TabsFG": "black",
+    "SearchedTextBG": "#CFD2CF",
+    "SearchedTextFG": "black",
     #fonts
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),

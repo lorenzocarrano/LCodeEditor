@@ -67,6 +67,36 @@ class CodeText(fileViewer.FileViewer):
         # return what the actual widget returned
         return result
 
+    def highlightMatches(self, pattern):
+        self.tag_remove('found', '1.0', tk.END)
+        ser = pattern
+        if ser:
+            idx = '1.0'
+            while 1:
+                idx = self.search(ser, idx, nocase=1,
+                                stopindex=tk.END)
+                if not idx: break
+                lastidx = '%s+%dc' % (idx, len(ser))
+
+                self.tag_add('found', idx, lastidx)
+                idx = lastidx
+            self.tag_config('found', foreground=et.SelectedTheme["SearchedTextFG"], background=et.SelectedTheme["SearchedTextBG"])
+'''
+    def highlightExactMatches(self, pattern):
+        self.tag_remove('foundExact', '1.0', tk.END)
+        #maybe also remove found tag, and in case remove also foundExact in previous method
+        idx = '1.0'
+        while 1:
+            patternRegexp = pattern+'[(\+\-\*\/=]?'
+            idx = self.search(patternRegexp, idx, nocase=1,
+                            stopindex=tk.END, regexp=True)
+            if not idx: break
+            lastidx = '%s+%dc' % (idx, len(pattern))
+
+            self.tag_add('foundExact', idx, lastidx)
+            idx = lastidx
+        self.tag_config('foundExact', foreground=et.SelectedTheme["SearchedTextFG"], background=et.SelectedTheme["SearchedTextBG"])
+'''
 class CodeViewer(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -118,6 +148,10 @@ class CodeViewer(tk.Frame):
         self.text.attachFile(fPath, data)
         self.displayedFile = fPath
         self._syntaxSetup()
+
+    def searchPattern(self, pattern):
+        self.text.highlightMatches(pattern)
+        #self.text.highlightExactMatches(pattern)
 
 
     def _syntaxSetup(self):
