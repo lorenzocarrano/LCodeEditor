@@ -11,7 +11,7 @@ class TabsContainer(ttk.Notebook):
 
     __initialized = False
 
-    def __init__(self, containerWidget, *args, **kwargs):
+    def __init__(self, containerWidget, editorApp, *args, **kwargs):
         if not self.__initialized:
             self.__initialize_custom_style()
             self.__inititialized = True
@@ -22,6 +22,7 @@ class TabsContainer(ttk.Notebook):
         self.enable_traversal()
         self._active = None
         self.containerWidget = containerWidget
+        self.editorApp = editorApp
         self.indexToEventuallyRemove = -1 #initValue
 
         self.bind("<ButtonPress-1>", self.on_close_press, True)
@@ -52,7 +53,7 @@ class TabsContainer(ttk.Notebook):
 
         index = self.index("@%d,%d" % (event.x, event.y))
         fileBeingClosed = self.tab(index)["text"]
-        self.containerWidget.CloseFileRequested(fileBeingClosed)
+        self.editorApp.CloseFileRequested(fileBeingClosed)
         self.indexToEventuallyRemove = index
 
     def removeTab(self):

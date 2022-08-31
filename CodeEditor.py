@@ -12,14 +12,15 @@ import filecmp
 
 class Editor:
     def __init__(self, root, workingPath):
-        self.TabsContainerObject = TabsContainer(self)
+        self.terminalPanel = TerminalPanel(root)
+        self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
+        self.terminalShown = True
+        self.TabsContainerObject = TabsContainer(root, editorApp=self)
         self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
         self.fileMngr = FileManager(root, workingPath, self)
         self.fileMngr.pack(side=LEFT, anchor=N)
         self.fManagerShown = True
         self.workingPath = workingPath
-        self.terminalPanel = TerminalPanel(root)
-        self.terminalShown = False
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
         #bind keys
         root.bind('<Escape>', self.closeCurrentFile)
@@ -175,10 +176,16 @@ class Editor:
             os.system(cmd)
 
     def onTerminalShowHide(self, event):
-        return #deactivated
         #toggle the show/hide state for terminal panel
         if self.terminalShown == False:
-            self.terminalPanel.pack(side=BOTTOM, expand=True, fill=X, anchor=S+W)
+            #first we remove everything from the screen
+            self.fileMngr.pack_forget()
+            self.TabsContainerObject.pack_forget()
+            self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
+            self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
+            if self.fManagerShown == True:
+                self.fileMngr.pack(side=LEFT, anchor=N)
+                self.fManagerShown = True
             self.terminalShown = True
         else:
             self.terminalPanel.pack_forget()
