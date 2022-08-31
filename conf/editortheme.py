@@ -14,6 +14,8 @@ DefaultTheme = {
     "TabsFG": "black",
     "SearchedTextBG": "yellow",
     "SearchedTextFG": "black",
+    "TerminalBG": "white",
+    "TerminalFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -40,6 +42,8 @@ DarkTheme = {
     "TabsFG": "black",
     "SearchedTextBG": "red",
     "SearchedTextFG": "white",
+    "TerminalBG": "white",
+    "TerminalFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -67,6 +71,8 @@ CustomTheme1 = {
     "TabsFG": "black",
     "SearchedTextBG": "#CFD2CF",
     "SearchedTextFG": "black",
+    "TerminalBG": "white",
+    "TerminalFG": "black",
     #fonts
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
