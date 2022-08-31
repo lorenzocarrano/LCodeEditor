@@ -42,8 +42,8 @@ DarkTheme = {
     "TabsFG": "black",
     "SearchedTextBG": "red",
     "SearchedTextFG": "white",
-    "TerminalBG": "white",
-    "TerminalFG": "black",
+    "TerminalBG": "black",
+    "TerminalFG": "white",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -71,8 +71,8 @@ CustomTheme1 = {
     "TabsFG": "black",
     "SearchedTextBG": "#CFD2CF",
     "SearchedTextFG": "black",
-    "TerminalBG": "white",
-    "TerminalFG": "black",
+    "TerminalBG": "Grey82",
+    "TerminalFG": "DarkBlue",
     #fonts
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
@@ -85,4 +85,4 @@ CustomTheme1 = {
 }
 
 #change the following line to select a theme
-SelectedTheme = DefaultTheme
+SelectedTheme = CustomTheme1
