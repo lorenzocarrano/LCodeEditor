@@ -116,6 +116,9 @@ class Editor:
                 os.system(cmd)
             self.ContainerWindow.destroy()
 
+        #close terminal subprocess
+        self.terminalPanel.killProcess()
+
     def fileModified(self):
         #check if .bak file is equal to the original file
         f1Path = self.FileBeingClosed #original file

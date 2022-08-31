@@ -1,6 +1,8 @@
 from tkinter import *
-import os
+import subprocess
 import editortheme as et
+import os
+
 class TerminalPanel(Canvas):
     def __init__(self, *args, **kwargs):
         Canvas.__init__(self, *args, **kwargs)
@@ -9,7 +11,17 @@ class TerminalPanel(Canvas):
         cmd = cmd + et.SelectedTheme["TerminalBG"] #set background
         cmd = cmd + ' -fg ' + et.SelectedTheme["TerminalFG"] #set foreground
         cmd = cmd + ' -sb &'
-        os.system(cmd)
+        self.terminalProcess = subprocess.Popen('exec ' + cmd, shell=True)
+
+        self.attachedPID = self.terminalProcess.pid
+        self.attachedPID = self.attachedPID+1
+        print(self.attachedPID)
+        #os.system(cmd)
+    def killProcess(self):
+        self.terminalProcess.kill()
+        #cmd = "kill -9 %d" % self.attachedPID
+        #print(cmd)
+        #os.system(cmd)
 
 
 if __name__ == "__main__":
