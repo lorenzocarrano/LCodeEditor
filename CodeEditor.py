@@ -146,12 +146,15 @@ class Editor:
         SearchWindow = EntryPanel(containerWidget=self.ContainerWindow, name="Find", labels=textsList, callbacks=callbacksList)
 
     def searchInCurrentFile(self, pattern):
+        print("currFile search")
         self.TabsContainerObject.searchPatternInCurrentFile(pattern)
 
     def searchInOpenedFiles(self, pattern):
+        print("openedFiles search")
         self.TabsContainerObject.searchPatternInOpenedFiles(pattern)
 
     def searchInAllFiles(self, pattern):
+        print("allFiles search")
         pass
 
     def _save(self, event=None):

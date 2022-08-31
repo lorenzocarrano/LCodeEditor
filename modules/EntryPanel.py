@@ -9,13 +9,14 @@ class EntryPanel(Toplevel):
             self.patternEntry.pack(side=TOP, expand=True, fill=X)
             for i in range(len(labels)):
                 button_i = Button(self, text=labels[i])
-                button_i.configure(command=lambda btn = button_i: self.invokeCallback(callbacks[i], btn))
+                button_i.configure(command=lambda btn = button_i, callback=callbacks[i]: self.invokeCallback(callback, btn))
                 button_i.pack(side=LEFT, expand=True, fill=X)
 
         self.patternEntry.focus() #it is possible to directly write inside entry after creation
 
 
     def invokeCallback(self, callback, btn):
+        print("invokeCallback")
         callback(self.patternEntry.get())
 
     def closePanel(self, event):
