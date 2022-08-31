@@ -12,6 +12,7 @@ import filecmp
 
 class Editor:
     def __init__(self, root, workingPath):
+        #the order in which widgets are instantiated is important to display them in a correct manner
         self.terminalPanel = TerminalPanel(root)
         self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
         self.terminalShown = True
