@@ -6,6 +6,7 @@ import os
 class TerminalPanel(Canvas):
     def __init__(self, *args, **kwargs):
         Canvas.__init__(self, *args, **kwargs)
+        return #deactivated
         wid = self.winfo_id()
         cmd = 'xterm -into %d -fn *-fixed-*-*-*-20-* -geometry 300x30 -bg ' %wid #set font and window frame
         cmd = cmd + et.SelectedTheme["TerminalBG"] #set background
@@ -18,6 +19,7 @@ class TerminalPanel(Canvas):
         print(self.attachedPID)
         #os.system(cmd)
     def killProcess(self):
+        return #deactivated
         self.terminalProcess.kill()
         #cmd = "kill -9 %d" % self.attachedPID
         #print(cmd)
