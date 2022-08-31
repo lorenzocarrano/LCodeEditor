@@ -5,16 +5,22 @@ from TabsContainer import *
 from CascadeMenu import *
 from YesNoPopupMessage import *
 from EntryPanel import *
+from TerminalPanel import TerminalPanel
 import os
 import filecmp
 #from StdOutManager import StdOutManager
 
 class Editor:
     def __init__(self, root, workingPath):
-        self.TabsContainerObject = TabsContainer(self)
+        #the order in which widgets are instantiated is important to display them in a correct manner
+        self.terminalPanel = TerminalPanel(root)
+        self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
+        self.terminalShown = True
+        self.TabsContainerObject = TabsContainer(root, editorApp=self)
         self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
         self.fileMngr = FileManager(root, workingPath, self)
         self.fileMngr.pack(side=LEFT, anchor=N)
+        self.fManagerShown = True
         self.workingPath = workingPath
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
         #bind keys
@@ -24,7 +30,12 @@ class Editor:
         #bind on close window event
         root.protocol("WM_DELETE_WINDOW", self.onClosingWindow)
         root.bind("<Control-Shift-Q>", self.onClosingWindowByKeyword)
+        #bind find pattern event
         root.bind("<Control-f>", self.onSearchPattern)
+        #bind show/hide terminal
+        root.bind("<Control-Shift-T>", self.onTerminalShowHide)
+        #bind show/hide FileManager panel
+        root.bind("<Control-Shift-M>", self.onFileManagerShowHide)
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
@@ -167,6 +178,31 @@ class Editor:
         for filePath in self.openedFiles:
             cmd = "cat " + filePath + ".bak > " + filePath
             os.system(cmd)
+
+    def onTerminalShowHide(self, event):
+        #toggle the show/hide state for terminal panel
+        if self.terminalShown == False:
+            #first we remove everything from the screen
+            self.fileMngr.pack_forget()
+            self.TabsContainerObject.pack_forget()
+            self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
+            self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
+            if self.fManagerShown == True:
+                self.fileMngr.pack(side=LEFT, anchor=N)
+                self.fManagerShown = True
+            self.terminalShown = True
+        else:
+            self.terminalPanel.pack_forget()
+            self.terminalShown = False
+
+    def onFileManagerShowHide(self, event):
+        #toggle the show/hide state for terminal panel
+        if self.fManagerShown == False:
+            self.fileMngr.pack(side=LEFT, anchor=N)
+            self.fManagerShown = True
+        else:
+            self.fileMngr.pack_forget()
+            self.fManagerShown = False
 
     #def _innest_closingFileEvent(self, event):
         #filePath = self.TabsContainerObject.getActiveTabText()
