@@ -42,8 +42,6 @@ class TextLineNumbers(tk.Canvas):
 class CodeText(fileViewer.FileViewer):
     def __init__(self, *args, **kwargs):
         fileViewer.FileViewer.__init__(self, *args, **kwargs)
-
-    def createProxy(self):
         # create a proxy for the underlying widget
         self._orig = self._w + "_orig"
         self.tk.call("rename", self._w, self._orig)
@@ -127,6 +125,9 @@ class CodeViewer(tk.Frame):
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
+        #bind on generated events
+        self.text.bind("<<Change>>", self._on_change)
+        self.text.bind("<Configure>", self._on_change)
 
         self.displayedFile =  ""
 
@@ -138,11 +139,6 @@ class CodeViewer(tk.Frame):
         self.text.attachFile(fPath, data)
         self.displayedFile = fPath
         self._syntaxSetup()
-        #activate bindings for text widget
-        self.text.createProxy()
-        #bind on generated events
-        self.text.bind("<<Change>>", self._on_change)
-        self.text.bind("<Configure>", self._on_change)
 
     def fileContentModified(self):
         return self.text.contentModified(self.displayedFile)
