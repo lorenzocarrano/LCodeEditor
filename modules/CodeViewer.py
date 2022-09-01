@@ -96,28 +96,12 @@ class CodeText(fileViewer.FileViewer):
                 idx = lastidx
 
                 stdoutMngr.stdoutPrint(data=lastidx, endCharacter='\n')
-        pass
-'''
-    def highlightExactMatches(self, pattern):
-        self.tag_remove('foundExact', '1.0', tk.END)
-        #maybe also remove found tag, and in case remove also foundExact in previous method
-        idx = '1.0'
-        while 1:
-            patternRegexp = pattern+'[(\+\-\*\/=]?'
-            idx = self.search(patternRegexp, idx, nocase=1,
-                            stopindex=tk.END, regexp=True)
-            if not idx: break
-            lastidx = '%s+%dc' % (idx, len(pattern))
 
-            self.tag_add('foundExact', idx, lastidx)
-            idx = lastidx
-        self.tag_config('foundExact', foreground=et.SelectedTheme["SearchedTextFG"], background=et.SelectedTheme["SearchedTextBG"])
-'''
 class CodeViewer(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"])
+        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"], insertbackground = et.SelectedTheme["CursorColor"])
 
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)

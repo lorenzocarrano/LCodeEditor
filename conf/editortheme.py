@@ -3,6 +3,7 @@ DefaultTheme = {
     #color palette
     "MainWindowBG": "light gray",
     "EditorBG": "white",
+    "CursorColor": "black",
     "LinesBG": "light gray",
     "CodeTextColorFG": "black",
     "CodeLinesColorFG": "black",
@@ -31,6 +32,7 @@ DarkTheme = {
     #color palette
     "MainWindowBG": "gray",
     "EditorBG": "black",
+    "CursorColor": "white",
     "LinesBG": "gray",
     "CodeTextColorFG": "white",
     "CodeLinesColorFG": "white",
@@ -60,6 +62,7 @@ CustomTheme1 = {
     #color palette
     "MainWindowBG": "#9191A8",
     "EditorBG": "#3A4551",
+    "CursorColor": "#CDC7BC",
     "LinesBG": "#9191A8",
     "CodeTextColorFG": "#CCCCCC",
     "CodeLinesColorFG": "black",
