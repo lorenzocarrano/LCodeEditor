@@ -97,9 +97,10 @@ class Editor:
         if save == True:
             self.TabsContainerObject.saveContentOfModifiedFiles()
 
-        self.ContainerWindow.destroy()
         #close terminal subprocess
         self.terminalPanel.killProcess()
+        #close App
+        self.ContainerWindow.destroy()
 
     def fileModified(self):
         return self.TabsContainerObject.isFileBeingClosedModified()
