@@ -43,6 +43,7 @@ class CodeText(fileViewer.FileViewer):
     def __init__(self, *args, **kwargs):
         fileViewer.FileViewer.__init__(self, *args, **kwargs)
 
+    def createProxy(self):
         # create a proxy for the underlying widget
         self._orig = self._w + "_orig"
         self.tk.call("rename", self._w, self._orig)
@@ -128,41 +129,42 @@ class CodeViewer(tk.Frame):
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
 
-        self.text.bind("<<Change>>", self._on_change)
-        self.text.bind("<Configure>", self._on_change)
         self.displayedFile =  ""
+        self.contentModified = False
 
     def _on_change(self, event):
         self.linenumbers.redraw()
         self._syntaxSetup()
-        #create/update .bak file
-        stdoutMngr = StdOutManager()
-        lines = self.text.get("1.0", tk.END).splitlines()
-        nLines = len(lines)
-        f = open(self.displayedFile+".bak", "w")
-        f.close()
-        count = 0
-        for line in lines:
-            if count == nLines-1:
-                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile+".bak", mode="a", endCharacter="")
-            else:
-                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile+".bak", mode="a", endCharacter="\n")
-            count = count +1
-        #f = open(self.displayedFile+".bak", "w")
-        ##save original stdout
-        #originalStdOut = sys.stdout
-        ##change stdout to file
-        #sys.stdout = f
-        ##write data in the file
-        #print(self.text.get("1.0", tk.END), "")
-        ##restore original stdout
-        #sys.stdout = sys.stdout
-        #f.close()
+        self.contentModified = True
 
     def attachFile(self, fPath, data):
         self.text.attachFile(fPath, data)
         self.displayedFile = fPath
         self._syntaxSetup()
+        #activate bindings for text widget
+        self.text.createProxy()
+        #bind on generated events
+        self.text.bind("<<Change>>", self._on_change)
+        self.text.bind("<Configure>", self._on_change)
+
+    def getModifyFlag(self):
+        return self.contentModified
+
+    def saveContent(self):
+        stdoutMngr = StdOutManager()
+        lines = self.text.get("1.0", tk.END).splitlines()
+        nLines = len(lines)
+        f = open(self.displayedFile, "w")
+        f.close()
+        count = 0
+        for line in lines:
+            if count == nLines-1:
+                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile, mode="a", endCharacter="")
+            else:
+                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile, mode="a", endCharacter="\n")
+            count = count +1
+        #the flag is reset since the file content has been saved
+        self.contentModified = False
 
     def searchPattern(self, pattern):
         self.text.highlightMatches(pattern)

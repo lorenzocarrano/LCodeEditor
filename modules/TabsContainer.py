@@ -24,6 +24,7 @@ class TabsContainer(ttk.Notebook):
         self.containerWidget = containerWidget
         self.editorApp = editorApp
         self.indexToEventuallyRemove = -1 #initValue
+        self.tabWithModifiedFiles = []
 
         self.bind("<ButtonPress-1>", self.on_close_press, True)
         self.bind("<ButtonRelease-1>", self.on_close_release)
@@ -52,9 +53,9 @@ class TabsContainer(ttk.Notebook):
             return
 
         index = self.index("@%d,%d" % (event.x, event.y))
+        self.indexToEventuallyRemove = index
         fileBeingClosed = self.tab(index)["text"]
         self.editorApp.CloseFileRequested(fileBeingClosed)
-        self.indexToEventuallyRemove = index
 
     def removeTab(self):
         flag = False #flag becomes true if the tab is correctly removed
@@ -74,6 +75,42 @@ class TabsContainer(ttk.Notebook):
 
     def getActiveTabText(self):
          return self.tab(self.select())["text"]
+
+    def atLeastOneFileModified(self):
+        self.tabWithModifiedFiles = []
+        if len(self.tabs()) == 0:
+            return False
+        for tabName in self.tabs():
+            activeObject = self.nametowidget(tabName) #retrieve widget inside active tab
+            if activeObject.getModifyFlag() == True:
+                self.tabWithModifiedFiles.append(tabName)
+        return len(self.tabWithModifiedFiles) > 0
+
+    def isFileBeingClosedModified(self):
+        activeObject = self.nametowidget(self.tabs()[self.indexToEventuallyRemove])
+        return activeObject.getModifyFlag()
+
+    def saveContentOfModifiedFiles(self):
+        for tabName in self.tabWithModifiedFiles:
+            activeObject = self.nametowidget(tabName)
+            if activeObject.getModifyFlag == True:
+                activeObject.saveContent()
+
+        #list is empted
+        self.tabWithModifiedFiles = []
+
+    def saveClosingFileContent(self):
+        activeObject = self.nametowidget(self.tabs()[self.indexToEventuallyRemove])
+        activeObject.saveContent()
+
+    def saveCurrentFileContent(self):
+        activeObject = self.nametowidget(self.tabs()[self.index("current")])
+        activeObject.saveContent()
+
+    def saveAllOpenedFiles(self):
+        for tabName in self.tabs():
+            activeObject = self.nametowidget(tabName)
+            activeObject.saveContent()
 
     def searchPatternInCurrentFile(self, pattern):
         activeObject = self.nametowidget(self.select()) #retrieve widget inside active tab
