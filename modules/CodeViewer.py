@@ -68,6 +68,21 @@ class CodeText(fileViewer.FileViewer):
         # return what the actual widget returned
         return result
 
+    def contentModified(self, path):
+        f = open(path, "r")
+        fLines = f.read().splitlines() #file lines
+        tLines = self.get("1.0", tk.END).splitlines() #text lines
+
+        if len(fLines) != len(tLines):
+            return True
+        for i in range(len(fLines)):
+            if tLines[i] != fLines[i]:
+                return True
+
+        return False
+
+
+
     def highlightMatches(self, pattern):
         self.tag_remove('found', '1.0', tk.END)
         ser = pattern
@@ -114,12 +129,10 @@ class CodeViewer(tk.Frame):
         self.text.pack(side="right", fill="both", expand=True)
 
         self.displayedFile =  ""
-        self.contentModified = False
 
     def _on_change(self, event):
         self.linenumbers.redraw()
         self._syntaxSetup()
-        self.contentModified = True
 
     def attachFile(self, fPath, data):
         self.text.attachFile(fPath, data)
@@ -131,8 +144,8 @@ class CodeViewer(tk.Frame):
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
 
-    def getModifyFlag(self):
-        return self.contentModified
+    def fileContentModified(self):
+        return self.text.contentModified(self.displayedFile)
 
     def saveContent(self):
         stdoutMngr = StdOutManager()

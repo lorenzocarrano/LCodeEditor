@@ -82,13 +82,13 @@ class TabsContainer(ttk.Notebook):
             return False
         for tabName in self.tabs():
             activeObject = self.nametowidget(tabName) #retrieve widget inside active tab
-            if activeObject.getModifyFlag() == True:
+            if activeObject.fileContentModified() == True:
                 self.tabWithModifiedFiles.append(tabName)
         return len(self.tabWithModifiedFiles) > 0
 
     def isFileBeingClosedModified(self):
         activeObject = self.nametowidget(self.tabs()[self.indexToEventuallyRemove])
-        return activeObject.getModifyFlag()
+        return activeObject.fileContentModified()
 
     def saveContentOfModifiedFiles(self):
         for tabName in self.tabWithModifiedFiles:
