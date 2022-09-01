@@ -16,7 +16,6 @@ class EntryPanel(Toplevel):
 
 
     def invokeCallback(self, callback, btn):
-        print("invokeCallback")
         callback(self.patternEntry.get())
 
     def closePanel(self, event):
