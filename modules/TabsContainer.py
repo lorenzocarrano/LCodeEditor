@@ -11,7 +11,7 @@ class TabsContainer(ttk.Notebook):
 
     __initialized = False
 
-    def __init__(self, containerWidget, *args, **kwargs):
+    def __init__(self, containerWidget, editorApp, *args, **kwargs):
         if not self.__initialized:
             self.__initialize_custom_style()
             self.__inititialized = True
@@ -22,7 +22,9 @@ class TabsContainer(ttk.Notebook):
         self.enable_traversal()
         self._active = None
         self.containerWidget = containerWidget
+        self.editorApp = editorApp
         self.indexToEventuallyRemove = -1 #initValue
+        self.tabWithModifiedFiles = []
 
         self.bind("<ButtonPress-1>", self.on_close_press, True)
         self.bind("<ButtonRelease-1>", self.on_close_release)
@@ -51,9 +53,9 @@ class TabsContainer(ttk.Notebook):
             return
 
         index = self.index("@%d,%d" % (event.x, event.y))
-        fileBeingClosed = self.tab(index)["text"]
-        self.containerWidget.CloseFileRequested(fileBeingClosed)
         self.indexToEventuallyRemove = index
+        fileBeingClosed = self.tab(index)["text"]
+        self.editorApp.CloseFileRequested(fileBeingClosed)
 
     def removeTab(self):
         flag = False #flag becomes true if the tab is correctly removed
@@ -73,6 +75,51 @@ class TabsContainer(ttk.Notebook):
 
     def getActiveTabText(self):
          return self.tab(self.select())["text"]
+
+    def atLeastOneFileModified(self):
+        self.tabWithModifiedFiles = []
+        if len(self.tabs()) == 0:
+            return False
+        for tabName in self.tabs():
+            activeObject = self.nametowidget(tabName) #retrieve widget inside active tab
+            if activeObject.fileContentModified() == True:
+                self.tabWithModifiedFiles.append(tabName)
+        return len(self.tabWithModifiedFiles) > 0
+
+    def isFileBeingClosedModified(self):
+        activeObject = self.nametowidget(self.tabs()[self.indexToEventuallyRemove])
+        return activeObject.fileContentModified()
+
+    def saveContentOfModifiedFiles(self):
+        for tabName in self.tabWithModifiedFiles:
+            activeObject = self.nametowidget(tabName)
+            if activeObject.getModifyFlag == True:
+                activeObject.saveContent()
+
+        #list is empted
+        self.tabWithModifiedFiles = []
+
+    def saveClosingFileContent(self):
+        activeObject = self.nametowidget(self.tabs()[self.indexToEventuallyRemove])
+        activeObject.saveContent()
+
+    def saveCurrentFileContent(self):
+        activeObject = self.nametowidget(self.tabs()[self.index("current")])
+        activeObject.saveContent()
+
+    def saveAllOpenedFiles(self):
+        for tabName in self.tabs():
+            activeObject = self.nametowidget(tabName)
+            activeObject.saveContent()
+
+    def searchPatternInCurrentFile(self, pattern):
+        activeObject = self.nametowidget(self.select()) #retrieve widget inside active tab
+        activeObject.searchPattern(pattern)
+
+    def searchPatternInOpenedFiles(self, pattern):
+        for tabName in self.tabs():
+            activeObject = self.nametowidget(tabName) #retrieve widget inside active tab
+            activeObject.getPatternOccurrencies(pattern)
 
     def __initialize_custom_style(self):
         style = ttk.Style()

@@ -42,7 +42,6 @@ class TextLineNumbers(tk.Canvas):
 class CodeText(fileViewer.FileViewer):
     def __init__(self, *args, **kwargs):
         fileViewer.FileViewer.__init__(self, *args, **kwargs)
-
         # create a proxy for the underlying widget
         self._orig = self._w + "_orig"
         self.tk.call("rename", self._w, self._orig)
@@ -67,11 +66,55 @@ class CodeText(fileViewer.FileViewer):
         # return what the actual widget returned
         return result
 
+    def contentModified(self, path):
+        f = open(path, "r")
+        fLines = f.read().splitlines() #file lines
+        tLines = self.get("1.0", tk.END).splitlines() #text lines
+
+        if len(fLines) != len(tLines):
+            return True
+        for i in range(len(fLines)):
+            if tLines[i] != fLines[i]:
+                return True
+
+        return False
+
+
+
+    def highlightMatches(self, pattern):
+        self.tag_remove('found', '1.0', tk.END)
+        ser = pattern
+        if ser:
+            idx = '1.0'
+            while 1:
+                idx = self.search(ser, idx, nocase=1,
+                                stopindex=tk.END)
+                if not idx: break
+                lastidx = '%s+%dc' % (idx, len(ser))
+
+                self.tag_add('found', idx, lastidx)
+                idx = lastidx
+            self.tag_config('found', foreground=et.SelectedTheme["SearchedTextFG"], background=et.SelectedTheme["SearchedTextBG"])
+
+    def getPatternOccurrencies(self, pattern):
+        ser = pattern
+        stdoutMngr = StdOutManager()
+        if ser:
+            idx = '1.0'
+            while 1:
+                idx = self.search(ser, idx, nocase=1,
+                                stopindex=tk.END)
+                if not idx: break
+                lastidx = '%s+%dc' % (idx, len(ser))
+                idx = lastidx
+
+                stdoutMngr.stdoutPrint(data=lastidx, endCharacter='\n')
+
 class CodeViewer(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"])
+        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"], insertbackground = et.SelectedTheme["CursorColor"])
 
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)
@@ -82,43 +125,48 @@ class CodeViewer(tk.Frame):
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
-
+        #bind on generated events
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
+
         self.displayedFile =  ""
 
     def _on_change(self, event):
         self.linenumbers.redraw()
         self._syntaxSetup()
-        #create/update .bak file
-        stdoutMngr = StdOutManager()
-        lines = self.text.get("1.0", tk.END).splitlines()
-        nLines = len(lines)
-        f = open(self.displayedFile+".bak", "w")
-        f.close()
-        count = 0
-        for line in lines:
-            if count == nLines-1:
-                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile+".bak", mode="a", endCharacter="")
-            else:
-                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile+".bak", mode="a", endCharacter="\n")
-            count = count +1
-        #f = open(self.displayedFile+".bak", "w")
-        ##save original stdout
-        #originalStdOut = sys.stdout
-        ##change stdout to file
-        #sys.stdout = f
-        ##write data in the file
-        #print(self.text.get("1.0", tk.END), "")
-        ##restore original stdout
-        #sys.stdout = sys.stdout
-        #f.close()
 
     def attachFile(self, fPath, data):
         self.text.attachFile(fPath, data)
         self.displayedFile = fPath
         self._syntaxSetup()
 
+    def fileContentModified(self):
+        return self.text.contentModified(self.displayedFile)
+
+    def saveContent(self):
+        stdoutMngr = StdOutManager()
+        lines = self.text.get("1.0", tk.END).splitlines()
+        nLines = len(lines)
+        f = open(self.displayedFile, "w")
+        f.close()
+        count = 0
+        for line in lines:
+            if count == nLines-1:
+                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile, mode="a", endCharacter="")
+            else:
+                stdoutMngr.stdoutPrint(data=line, fOut=self.displayedFile, mode="a", endCharacter="\n")
+            count = count +1
+        #the flag is reset since the file content has been saved
+        self.contentModified = False
+
+    def searchPattern(self, pattern):
+        self.text.highlightMatches(pattern)
+        #self.text.highlightExactMatches(pattern)
+
+    def getPatternOccurrencies(self, pattern):
+        #return a list of tuples containing the pattern's matches
+        self.text.getPatternOccurrencies(pattern)
+        pass
 
     def _syntaxSetup(self):
         #set the right syntax highlighting depending on detected language

@@ -3,6 +3,7 @@ DefaultTheme = {
     #color palette
     "MainWindowBG": "light gray",
     "EditorBG": "white",
+    "CursorColor": "black",
     "LinesBG": "light gray",
     "CodeTextColorFG": "black",
     "CodeLinesColorFG": "black",
@@ -12,6 +13,10 @@ DefaultTheme = {
     "FileManagerTextFG": "black",
     "TabsBG": "light gray",
     "TabsFG": "black",
+    "SearchedTextBG": "yellow",
+    "SearchedTextFG": "black",
+    "TerminalBG": "white",
+    "TerminalFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -27,6 +32,7 @@ DarkTheme = {
     #color palette
     "MainWindowBG": "gray",
     "EditorBG": "black",
+    "CursorColor": "white",
     "LinesBG": "gray",
     "CodeTextColorFG": "white",
     "CodeLinesColorFG": "white",
@@ -36,6 +42,10 @@ DarkTheme = {
     "FileManagerTextFG": "black",
     "TabsBG": "light gray",
     "TabsFG": "black",
+    "SearchedTextBG": "red",
+    "SearchedTextFG": "white",
+    "TerminalBG": "black",
+    "TerminalFG": "white",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -52,6 +62,7 @@ CustomTheme1 = {
     #color palette
     "MainWindowBG": "#9191A8",
     "EditorBG": "#3A4551",
+    "CursorColor": "#CDC7BC",
     "LinesBG": "#9191A8",
     "CodeTextColorFG": "#CCCCCC",
     "CodeLinesColorFG": "black",
@@ -61,6 +72,10 @@ CustomTheme1 = {
     "FileManagerTextFG": "black",
     "TabsBG": "#9191A8",
     "TabsFG": "black",
+    "SearchedTextBG": "#CFD2CF",
+    "SearchedTextFG": "black",
+    "TerminalBG": "Grey82",
+    "TerminalFG": "DarkBlue",
     #fonts
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
