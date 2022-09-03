@@ -11,11 +11,8 @@ class TerminalPanel(Canvas):
         cmd = cmd + et.SelectedTheme["TerminalBG"] #set background
         cmd = cmd + ' -fg ' + et.SelectedTheme["TerminalFG"] #set foreground
         cmd = cmd + ' -sb &'
-        try:
-            self.terminalProcess = subprocess.Popen('exec ' + cmd, shell=True)
-        except Exception as e:
-            print(e)
-            return
+        
+        self.terminalProcess = subprocess.Popen('exec ' + cmd, shell=True)
         self.attachedPID = self.terminalProcess.pid
         self.attachedPID = self.attachedPID+1
 
