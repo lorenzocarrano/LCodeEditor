@@ -93,8 +93,7 @@ class TabsContainer(ttk.Notebook):
     def saveContentOfModifiedFiles(self):
         for tabName in self.tabWithModifiedFiles:
             activeObject = self.nametowidget(tabName)
-            if activeObject.getModifyFlag == True:
-                activeObject.saveContent()
+            activeObject.saveContent()
 
         #list is empted
         self.tabWithModifiedFiles = []

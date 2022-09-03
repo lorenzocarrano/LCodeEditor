@@ -12,7 +12,7 @@ Cregex = re.compile(
         r"(?P<int>\bint\b)" + "|"   # int variable
         r"(?P<float>\bfloat\b)" + "|" #float variable
         r"(?P<char>\bchar\b)" + "|" #char variable
-        r"(?P<number>[0-9]+)" + "|" #numbers
+        r"(?P<number>\b[0-9]+)" + "|" #numbers
         r"(?P<plusOperator>[\+]+)" + "|" #plusOperator
         r"(?P<minusOperator>[\-]+)" + "|" #minusOperator
         r"(?P<multOperator>[\*]+)" + "|" #multOperator
