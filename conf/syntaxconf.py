@@ -97,7 +97,7 @@ Pyregex = re.compile(
     r"(?P<return>\breturn\b)" +  "|" #return
     r"(?P<True>\bTrue\b)" + "|" #True
     r"(?P<False>\bFalse\b)" + "|" #False
-    r"(?P<number>[0-9]+)" + "|" #numbers
+    r"(?P<number>\b[0-9]+)" + "|" #numbers
     r"(?P<plusOperator>[\+]+)" + "|" #plusOperator
     r"(?P<minusOperator>[\-]+)" + "|" #minusOperator
     r"(?P<multOperator>[\*]+)" + "|" #multOperator
