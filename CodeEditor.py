@@ -36,6 +36,8 @@ class Editor:
         root.bind("<Control-Shift-T>", self.onTerminalShowHide)
         #bind show/hide FileManager panel
         root.bind("<Control-Shift-M>", self.onFileManagerShowHide)
+        #reload interface to repair terminal
+        root.bind("<Control-Shift-R>", self._refreshTerminal)
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
@@ -156,6 +158,21 @@ class Editor:
         else:
             self.fileMngr.pack_forget()
             self.fManagerShown = False
+
+    def _refreshTerminal(self, event):
+        if self.terminalShown == True:
+            #first we remove everything from the screen
+            self.fileMngr.pack_forget()
+            self.TabsContainerObject.pack_forget()
+            self.TabsContainerObject.pack_forget()
+            self.terminalPanel.refreshTerminal()
+            self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
+            if self.fManagerShown == True:
+                self.fileMngr.pack(side=LEFT, anchor=N)
+                self.fManagerShown = True
+            self.terminalShown = True
+        else:
+            pass
 
     #def _innest_closingFileEvent(self, event):
         #filePath = self.TabsContainerObject.getActiveTabText()
