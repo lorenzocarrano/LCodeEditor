@@ -21,7 +21,6 @@ class TerminalPanel(Canvas):
         cmd = "kill -9 %d" % self.attachedPID
         os.system(cmd)
 
-
 if __name__ == "__main__":
     root = Tk()
 

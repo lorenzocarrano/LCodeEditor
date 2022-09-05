@@ -184,6 +184,150 @@ def applyPy_Tags(code):
                         "{0}.{1}".format(idx+1, match.end(group_name))
                     )
 
+#VHDL language
+VHDLExtensionsList = [".vhd"]
+VHDLregex = re.compile(
+    r"(^\s*"
+    r"(?P<if>\bif\b)" + "|"  # if condition
+    r"(?P<for>\bfor\b)" + "|"  # for loop
+    r"(?P<entity>\bentity\b)" +  "|" #entity
+    r"(?P<architecture>\barchitecture\b)" + "|" #architecture
+    r"(?P<of>\bof\b)" + "|" #of
+    r"(?P<is>\bis\b)" + "|" #is
+    r"(?P<use>\buse\b)" + "|" #use
+    r"(?P<library>\blibrary\b)" + "|" #library
+    r"(?P<generate>\bgenerate\b)" + "|" #generate
+    r"(?P<in>\bin\b)" + "|" #in
+    r"(?P<out>\bout\b)" + "|" #out
+    r"(?P<to>\bto\b)" + "|" #to
+    r"(?P<downto>\bdownto\b)" + "|" #downto
+    r"(?P<port>\bport\b)" + "|" #port
+    r"(?P<map>\bmap\b)" + "|" #map
+    r"(?P<generic>\bgeneric\b)" + "|" #generic
+    r"(?P<begin>\bbegin\b)" + "|" #begin
+    r"(?P<end>\bend\b)" + "|" #end
+    r"(?P<process>\bprocess\b)" + "|" #process
+    r"(?P<number>\b[0-9]+)" + "|" #numbers
+    r"(?P<plusOperator>[\+]+)" + "|" #plusOperator
+    r"(?P<minusOperator>[\-]+)" + "|" #minusOperator
+    r"(?P<multOperator>[\*]+)" + "|" #multOperator
+    r"(?P<divOperator>[\/]+)" + "|" #divOperator
+    r"(?P<equalOperator>[=]+)" + "|" #equalOperator
+    r"(?P<CommentedLine>#.*)" + "|" #commented line
+    r"(?P<stringQuotes>'.*')" + "|" #stringQuotes
+    r'(?P<stringDoubleQuotes>".*")' + "|" #stringDoubleQuotes
+    r"[\s\(]+)"
+    , re.IGNORECASE)
+
+def applyVHDL_Tags(code):
+    lines = code.text.get(1.0, tk.END).splitlines()
+    for idx, line in enumerate(lines):
+        for_tag = f"for_{idx}"
+        if_tag = f"if_{idx}"
+        entity_tag = f"entity_{idx}"
+        of_tag = f"of_{idx}"
+        is_tag = f"is_{idx}"
+        use_tag = f"use_{idx}"
+        library_tag = f"library_{idx}"
+        generate_tag = f"generate_{idx}"
+        in_tag = f"in_{idx}"
+        out_tag = f"out_{idx}"
+        to_tag = f"to_{idx}"
+        downto_tag = f"downto_{idx}"
+        port_tag = f"port_{idx}"
+        map_tag = f"map_{idx}"
+        generic_tag = f"generic_{idx}"
+        begin_tag = f"begin_{idx}"
+        end_tag = f"end_{idx}"
+        process_tag = f"process_{idx}"
+        architecture_tag = f"architecture_{idx}"
+        number_tag = f"number_{idx}"
+        plusOperator_tag = f"plusOperator_{idx}"
+        minusOperator_tag = f"minusOperator_{idx}"
+        multOperator_tag = f"multOperator_{idx}"
+        divOperator_tag = f"divOperator_{idx}"
+        equalOperator_tag = f"equalOperator_{idx}"
+        CommentedLine_tag = f"CommentedLine_{idx}"
+        stringQuotes_tag = f"stringQuotes_{idx}"
+        stringDoubleQuotes_tag = f"stringDoubleQuotes_{idx}"
+        tags = {}
+        if et.SelectedTheme == et.DefaultTheme:
+            tags = {
+                for_tag: "blue",
+                if_tag: "blue",
+                entity_tag: "blue",
+                of_tag: "blue",
+                is_tag: "blue",
+                architecture_tag: "blue",
+                use_tag: "red",
+                library_tag: "red",
+                generate_tag: "red",
+                in_tag: "red",
+                out_tag: "red",
+                to_tag: "red",
+                downto_tag: "blue",
+                port_tag: "blue",
+                map_tag: "blue",
+                generic_tag: "blue",
+                begin_tag: "red",
+                end_tag: "red",
+                process_tag: "blue",
+                CommentedLine_tag: "gray",
+                stringQuotes_tag: "purple",
+                stringDoubleQuotes_tag: "purple",
+                number_tag: "red",
+                plusOperator_tag: "purple",
+                minusOperator_tag: "purple",
+                multOperator_tag: "purple",
+                divOperator_tag: "purple",
+                equalOperator_tag: "purple",
+                # add new tag here
+            }
+        else:
+            tags = {
+                for_tag: "blue",
+                if_tag: "blue",
+                entity_tag: "blue",
+                of_tag: "blue",
+                is_tag: "blue",
+                architecture_tag: "blue",
+                use_tag: "red",
+                library_tag: "red",
+                generate_tag: "red",
+                in_tag: "red",
+                out_tag: "red",
+                to_tag: "red",
+                downto_tag: "blue",
+                port_tag: "blue",
+                map_tag: "blue",
+                generic_tag: "blue",
+                begin_tag: "red",
+                end_tag: "red",
+                process_tag: "blue",
+                CommentedLine_tag: "gray",
+                stringQuotes_tag: "purple",
+                stringDoubleQuotes_tag: "purple",
+                number_tag: "red",
+                plusOperator_tag: "purple",
+                minusOperator_tag: "purple",
+                multOperator_tag: "purple",
+                divOperator_tag: "purple",
+                equalOperator_tag: "purple",
+                # add new tag here
+            }
+
+        code._configure_tags(code.text, tags)
+        for match in VHDLregex.finditer(line):     #substitute here the proper regex variable!
+            for tag in tags:
+                group_name = tag.split("_")[0]
+                if -1 != match.start(group_name):
+                    code.text.tag_add(
+                        tag,
+                        "{0}.{1}".format(idx+1, match.start(group_name)),
+                        "{0}.{1}".format(idx+1, match.end(group_name))
+                    )
+
+
 #lists
-regexList = [Cregex, Pyregex]
-applyTagCalls = [applyC_Tags, applyPy_Tags]
+regexList = [Cregex, Pyregex, VHDLregex]
+applyTagCalls = [applyC_Tags, applyPy_Tags, applyVHDL_Tags]
