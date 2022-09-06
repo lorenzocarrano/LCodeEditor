@@ -17,6 +17,13 @@ DefaultTheme = {
     "SearchedTextFG": "black",
     "TerminalBG": "white",
     "TerminalFG": "black",
+    "YesNoPopupBG": "light gray",
+    "YesNoPopup_LabelBG": "light gray",
+    "YesNoPopup_LabelFG": "black",
+    "YesNoPopupLabel_YesButtonBG": "light gray",
+    "YesNoPopupLabel_YesButtonFG": "black",
+    "YesNoPopupLabel_NoButtonBG": "light gray",
+    "YesNoPopupLabel_NoButtonFG": "black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -46,6 +53,13 @@ DarkTheme = {
     "SearchedTextFG": "white",
     "TerminalBG": "black",
     "TerminalFG": "white",
+    "YesNoPopupBG": "black",
+    "YesNoPopup_LabelBG": "black",
+    "YesNoPopup_LabelFG": "white",
+    "YesNoPopupLabel_YesButtonBG": "black",
+    "YesNoPopupLabel_YesButtonFG": "white",
+    "YesNoPopupLabel_NoButtonBG": "black",
+    "YesNoPopupLabel_NoButtonFG": "white",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -76,6 +90,13 @@ CustomTheme1 = {
     "SearchedTextFG": "black",
     "TerminalBG": "Grey82",
     "TerminalFG": "DarkBlue",
+    "YesNoPopupBG": "#9191A8",
+    "YesNoPopup_LabelBG": "#9191A8",
+    "YesNoPopup_LabelFG": "black",
+    "YesNoPopupLabel_YesButtonBG": "#9191A8",
+    "YesNoPopupLabel_YesButtonFG": "black",
+    "YesNoPopupLabel_NoButtonBG": "#9191A8",
+    "YesNoPopupLabel_NoButtonFG": "black",
     #fonts
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
@@ -88,4 +109,4 @@ CustomTheme1 = {
 }
 
 #change the following line to select a theme
-SelectedTheme = DefaultTheme
+SelectedTheme = CustomTheme1
