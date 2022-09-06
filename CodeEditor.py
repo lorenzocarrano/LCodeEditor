@@ -21,6 +21,7 @@ class Editor:
         self.fileMngr = FileManager(root, workingPath, self)
         self.fileMngr.pack(side=LEFT, anchor=N)
         self.fManagerShown = True
+        self.findPanelShown = False
         self.workingPath = workingPath
         #self.topMenu = CascadeMenu(root, ["Open"], [self.openFile("")])
         #bind keys
@@ -41,6 +42,7 @@ class Editor:
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
+        self.SearchWindow = None #init
 
     def openFile(self, path):
         if path not in self.openedFiles:
@@ -111,10 +113,13 @@ class Editor:
         return self.TabsContainerObject.atLeastOneFileModified()
 
     def onSearchPattern(self, event):
-        #SearchWindow = EntryPanel(self.ContainerWindow, text1="Search in current file", text2="Search in all files   ", callback1=self.searchInCurrentFile, callback2=self.searchInOpenedFiles)
-        textsList = ["Find in current file", "Find in opened files", "Find in all files   "]
-        callbacksList = [self.searchInCurrentFile, self.searchInOpenedFiles, self.searchInAllFiles]
-        SearchWindow = EntryPanel(containerWidget=self.ContainerWindow, name="Find", labels=textsList, callbacks=callbacksList)
+        if self.findPanelShown == False:
+            textsList = ["Find in current file", "Find in opened files", "Find in all files   "]
+            callbacksList = [self.searchInCurrentFile, self.searchInOpenedFiles, self.searchInAllFiles]
+            self.SearchWindow = EntryPanel(containerWidget=self.ContainerWindow, name="Find", labels=textsList, callbacks=callbacksList, onClosingCallback=self.findPanelClosed)
+            self.findPanelShown = True
+        else:
+            self.SearchWindow.focus()
 
     def searchInCurrentFile(self, pattern):
         print("currFile search")
@@ -173,6 +178,9 @@ class Editor:
             self.terminalShown = True
         else:
             pass
+
+    def findPanelClosed(self):
+        self.findPanelShown = False
 
     #def _innest_closingFileEvent(self, event):
         #filePath = self.TabsContainerObject.getActiveTabText()

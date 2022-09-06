@@ -2,10 +2,12 @@ from tkinter import *
 import editortheme as et
 
 class EntryPanel(Toplevel):
-    def __init__(self, containerWidget, name, labels, callbacks):
+    def __init__(self, containerWidget, name, labels, callbacks, onClosingCallback=None):
         Toplevel.__init__(self, containerWidget, background=et.SelectedTheme["EntryPanelBG"])
         self.title(name)
+        self.onClosingCallback = onClosingCallback
         self.bind('<Escape>', self.closePanel)
+        self.protocol("WM_DELETE_WINDOW", self._onClosingPanel)
         if len(labels) == len(callbacks):
             self.patternEntry = Entry(self, width=50, background=et.SelectedTheme["EntryPanel_EntryBG"], foreground=et.SelectedTheme["EntryPanel_EntryFG"], insertbackground=et.SelectedTheme["EntryPanel_CursorColor"])
             self.patternEntry.pack(side=TOP, expand=True, fill=X)
@@ -21,6 +23,11 @@ class EntryPanel(Toplevel):
         callback(self.patternEntry.get())
 
     def closePanel(self, event):
+        self.onClosingCallback()
+        self.destroy()
+
+    def _onClosingPanel(self):
+        self.onClosingCallback()
         self.destroy()
 
 '''
