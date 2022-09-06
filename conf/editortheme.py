@@ -24,6 +24,12 @@ DefaultTheme = {
     "YesNoPopupLabel_YesButtonFG": "black",
     "YesNoPopupLabel_NoButtonBG": "light gray",
     "YesNoPopupLabel_NoButtonFG": "black",
+    "EntryPanelBG": "light gray",
+    "EntryPanel_ButtonsBG": "light gray",
+    "EntryPanel_ButtonsFG": "black",
+    "EntryPanel_EntryBG": "white",
+    "EntryPanel_EntryFG": "black",
+    "EntryPanel_CursorColor":"black",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -60,6 +66,12 @@ DarkTheme = {
     "YesNoPopupLabel_YesButtonFG": "white",
     "YesNoPopupLabel_NoButtonBG": "black",
     "YesNoPopupLabel_NoButtonFG": "white",
+    "EntryPanelBG": "black",
+    "EntryPanel_ButtonsBG": "black",
+    "EntryPanel_ButtonsFG": "white",
+    "EntryPanel_EntryBG": "black",
+    "EntryPanel_EntryFG": "white",
+    "EntryPanel_CursorColor":"white",
     #fonts
     "CodeTextFONT": "TkFixedFont",
     "CodeLinesNumberFONT": "TkFixedFont",
@@ -97,6 +109,12 @@ CustomTheme1 = {
     "YesNoPopupLabel_YesButtonFG": "black",
     "YesNoPopupLabel_NoButtonBG": "#9191A8",
     "YesNoPopupLabel_NoButtonFG": "black",
+    "EntryPanelBG": "#9191A8",
+    "EntryPanel_ButtonsBG": "#9191A8",
+    "EntryPanel_ButtonsFG": "black",
+    "EntryPanel_EntryBG": "Grey82",
+    "EntryPanel_EntryFG": "black",
+    "EntryPanel_CursorColor":"black",
     #fonts
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
@@ -109,4 +127,4 @@ CustomTheme1 = {
 }
 
 #change the following line to select a theme
-SelectedTheme = CustomTheme1
+SelectedTheme = DefaultTheme

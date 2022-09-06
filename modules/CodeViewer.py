@@ -114,7 +114,7 @@ class CodeViewer(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"], insertbackground = et.SelectedTheme["CursorColor"])
+        self.text = CodeText(self, background=et.SelectedTheme["EditorBG"], foreground=et.SelectedTheme["CodeTextColorFG"], font=et.SelectedTheme["CodeTextFONT"], insertbackground = et.SelectedTheme["EntryPanel_CursorColor"])
 
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.vsb.set)
@@ -203,9 +203,3 @@ class CodeViewer(tk.Frame):
         else:
             return 2
 
-'''
-if __name__ == "__main__":
-    root = tk.Tk()
-    CodeViewer(root).pack(side="top", fill="both", expand=True)
-    root.mainloop()
-'''
