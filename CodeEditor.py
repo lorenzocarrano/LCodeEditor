@@ -164,9 +164,9 @@ class Editor:
             #first we remove everything from the screen
             self.fileMngr.pack_forget()
             self.TabsContainerObject.pack_forget()
-            self.TabsContainerObject.pack_forget()
             self.terminalPanel.refreshTerminal()
             self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
+            self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
             if self.fManagerShown == True:
                 self.fileMngr.pack(side=LEFT, anchor=N)
                 self.fManagerShown = True

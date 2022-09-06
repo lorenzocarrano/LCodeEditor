@@ -11,8 +11,8 @@ class YesNoPopupMessage(Toplevel):
         noBtn = Button(self, text="No", command=lambda: self.close(False))
 
         msgLabel.pack(side=TOP)
-        yesBtn.pack(side=LEFT)
-        noBtn.pack(side=RIGHT)
+        yesBtn.pack(side=LEFT, expand=True, fill=X)
+        noBtn.pack(side=RIGHT, expand=True, fill=X)
 
     def close(self, save):
         self.closeCallback(save)
