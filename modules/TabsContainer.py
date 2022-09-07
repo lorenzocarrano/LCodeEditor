@@ -57,12 +57,13 @@ class TabsContainer(ttk.Notebook):
         fileBeingClosed = self.tab(index)["text"]
         self.editorApp.CloseFileRequested(fileBeingClosed)
 
-    def removeTab(self):
+    def removeTab(self, forceRemove=False):
+        #forceRemove is True when close request is triggered by an external event and not clicking on the X icon on the tab
         flag = False #flag becomes true if the tab is correctly removed
         #stdoutMngr = StdOutManager()
         #stdoutMngr.stdoutPrint(data="TabsContainer: removeTab invoked", endCharacter="\n")
         index = self.indexToEventuallyRemove
-        if self._active == index:
+        if self._active == index or forceRemove == True:
             #stdoutMngr.stdoutPrint(data="TabsContainer: removeTab --> removed", endCharacter="\n")
             self.forget(index)
             self.event_generate("<<NotebookTabClosed>>")
@@ -75,6 +76,12 @@ class TabsContainer(ttk.Notebook):
 
     def getActiveTabText(self):
          return self.tab(self.select())["text"]
+
+    def removeTabRequestedFromExternalEvent(self):
+        index = self.index("current")
+        self.indexToEventuallyRemove = index
+        fileBeingClosed = self.tab(index)["text"]
+        self.editorApp.CloseFileRequested(fileBeingClosed)
 
     def atLeastOneFileModified(self):
         self.tabWithModifiedFiles = []

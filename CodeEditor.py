@@ -43,6 +43,7 @@ class Editor:
         self.openedFiles = []
         self.FileBeingClosed = "" #init
         self.SearchWindow = None #init
+        self.ForceCloseTab = False #init
 
     def openFile(self, path):
         if path not in self.openedFiles:
@@ -74,16 +75,18 @@ class Editor:
             self.TabsContainerObject.saveClosingFileContent()
         try:
             #stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> try", endCharacter="\n")
-            flag = self.TabsContainerObject.removeTab()
+            flag = self.TabsContainerObject.removeTab(forceRemove=self.ForceCloseTab)
         except:
             #stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> except", endCharacter="\n")
             return
+        self.ForceCloseTab = False
 
         if flag == True:
             self.openedFiles.remove(self.FileBeingClosed)
 
     def closeCurrentFile(self, event):
-        pass
+        self.ForceCloseTab = True
+        self.TabsContainerObject.removeTabRequestedFromExternalEvent()
 
     def onClosingWindow(self):
         if self.atLeastOneFileModified():
