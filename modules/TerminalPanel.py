@@ -9,4 +9,5 @@ class TerminalPanel(Terminal):
         super().__init__(parent, *args, **kwargs)
 
     def killProcess(self):
-        self.master.destroy()
+        # compatibility with older version with terminal widget different from tkterm
+        return
