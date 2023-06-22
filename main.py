@@ -1,9 +1,9 @@
 import sys
-sys.path.insert(0, '/home/lorenzo/src/PythonApps/CodeEditor')
-sys.path.insert(1, '/home/lorenzo/src/PythonApps/CodeEditor/modules')
-sys.path.insert(2, '/home/lorenzo/src/PythonApps/CodeEditor/modules/primitives')
-sys.path.insert(3, '/home/lorenzo/src/PythonApps/CodeEditor/conf')
-sys.path.insert(4, '/home/lorenzo/src/PythonApps/CodeEditor/ThirdParty/TkTerm/tkterm')
+sys.path.insert(0, '.')
+sys.path.insert(1, './modules')
+sys.path.insert(2, './modules/primitives')
+sys.path.insert(3, './conf')
+sys.path.insert(4, './ThirdParty/TkTerm/tkterm')
 
 from tkinter import *
 from CodeEditor import Editor

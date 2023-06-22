@@ -86,18 +86,18 @@ DarkTheme = {
 
 CustomTheme1 = {
     #color palette
-    "MainWindowBG": "#9191A8",
-    "EditorBG": "#3A4551",
+    "MainWindowBG": "#282C34",
+    "EditorBG": "#282C34",
     "CursorColor": "#CDC7BC",
-    "LinesBG": "#9191A8",
+    "LinesBG": "#282C34",
     "CodeTextColorFG": "#CCCCCC",
-    "CodeLinesColorFG": "black",
+    "CodeLinesColorFG": "light gray",
     "FileManagerHeaderTextBG": "light gray",
     "FileManagerHeaderTextFG": "black",
-    "FileManagerTextBG": "#CDC7BC",
-    "FileManagerTextFG": "black",
-    "TabsBG": "#9191A8",
-    "TabsFG": "black",
+    "FileManagerTextBG": "#282C34",
+    "FileManagerTextFG": "#0080ff",
+    "TabsBG": "#464e5e",
+    "TabsFG": "light gray",
     "SearchedTextBG": "#CFD2CF",
     "SearchedTextFG": "black",
     "TerminalBG": "Grey82",
@@ -119,7 +119,7 @@ CustomTheme1 = {
     "CodeTextFONT": ('Courier New', 10),
     "CodeLinesNumberFONT": ("TkFixedFont", 9),
     "FileManagerHeaderTextFONT": ('Calibri', 8,'bold'),
-    "FileManagerTextFONT": ('Calibri', 10),
+    "FileManagerTextFONT": ('Cascadia Code Bold', 10),
     "TabsFONT": ("Courier New", 10),
     #sizes
     "FileManagerROW_HEIGHT": 40,
@@ -127,4 +127,4 @@ CustomTheme1 = {
 }
 
 #change the following line to select a theme
-SelectedTheme = DefaultTheme
+SelectedTheme = CustomTheme1
