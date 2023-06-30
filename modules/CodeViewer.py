@@ -54,13 +54,13 @@ class CodeText(fileViewer.FileViewer):
 
         # generate an event if something was added or deleted,
         # or the cursor position changed
-        if (args[0] in ("insert", "replace", "delete")): #or
-            #args[0:3] == ("mark", "set", "insert") or
+        if (args[0] in ("insert", "replace", "delete") or
+            args[0:3] == ("mark", "set", "insert") or
             #args[0:2] == ("xview", "moveto") or
             #args[0:2] == ("xview", "scroll") or
-            #args[0:2] == ("yview", "moveto") or
-            #args[0:2] == ("yview", "scroll")
-        #):
+            args[0:2] == ("yview", "moveto") or
+            args[0:2] == ("yview", "scroll")
+        ):
             self.event_generate("<<Change>>", when="tail")
 
         # return what the actual widget returned
