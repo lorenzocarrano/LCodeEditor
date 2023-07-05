@@ -156,4 +156,4 @@ TkTermTheme = {
 }
 
 #change the following line to select a theme
-SelectedTheme = TkTermTheme
+SelectedTheme = DefaultTheme

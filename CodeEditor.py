@@ -6,6 +6,7 @@ from CascadeMenu import *
 from YesNoPopupMessage import *
 from EntryPanel import *
 from TerminalPanel import TerminalPanel
+from EditorMainPanel import EditorMainPanel
 import os
 import filecmp
 #from StdOutManager import StdOutManager
@@ -13,13 +14,11 @@ import filecmp
 class Editor:
     def __init__(self, root, workingPath):
         #the order in which widgets are instantiated is important to display them in a correct manner
-        self.terminalPanel = TerminalPanel(root)
-        self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
-        self.terminalShown = True
-        self.TabsContainerObject = TabsContainer(root, editorApp=self)
-        self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
         self.fileMngr = FileManager(root, workingPath, self)
         self.fileMngr.pack(side=LEFT, anchor=N)
+        self.editorMainPanel = EditorMainPanel(root, editorApp=self)
+        self.editorMainPanel.pack(fill=BOTH, expand=True)
+        self.terminalShown = True
         self.fManagerShown = True
         self.findPanelShown = False
         self.workingPath = workingPath
@@ -33,12 +32,8 @@ class Editor:
         root.bind("<Control-Shift-Q>", self.onClosingWindowByKeyword)
         #bind find pattern event
         root.bind("<Control-f>", self.onSearchPattern)
-        #bind show/hide terminal
-        root.bind("<Control-Shift-T>", self.onTerminalShowHide)
         #bind show/hide FileManager panel
         root.bind("<Control-Shift-M>", self.onFileManagerShowHide)
-        #reload interface to repair terminal
-        root.bind("<Control-Shift-R>", self._refreshTerminal)
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosed = "" #init
@@ -52,9 +47,10 @@ class Editor:
                 data = f.read()
                 cViewer = CodeViewer()
                 cViewer.attachFile(path, data)
-                self.TabsContainerObject.add(cViewer, text=path)
+                self.editorMainPanel.add(cViewer, text=path)
                 self.openedFiles.append(path)
             except Exception as e:
+                print("error", e)
                 return
 
     def CloseFileRequested(self, path):
@@ -72,10 +68,10 @@ class Editor:
     def CloseFile(self, save):
         #stdoutMngr = StdOutManager()
         if save == True:
-            self.TabsContainerObject.saveClosingFileContent()
+            self.editorMainPanel.saveClosingFileContent()
         try:
             #stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> try", endCharacter="\n")
-            flag = self.TabsContainerObject.removeTab(forceRemove=self.ForceCloseTab)
+            flag = self.editorMainPanel.removeTab(forceRemove=self.ForceCloseTab)
         except:
             #stdoutMngr.stdoutPrint(data="CodeEditor: CloseFile --> except", endCharacter="\n")
             return
@@ -86,7 +82,7 @@ class Editor:
 
     def closeCurrentFile(self, event):
         self.ForceCloseTab = True
-        self.TabsContainerObject.removeTabRequestedFromExternalEvent()
+        self.editorMainPanel.removeTabRequestedFromExternalEvent()
 
     def onClosingWindow(self):
         if self.atLeastOneFileModified():
@@ -102,18 +98,16 @@ class Editor:
 
     def closeSavingAllFiles(self, save):
         if save == True:
-            self.TabsContainerObject.saveContentOfModifiedFiles()
+            self.editorMainPanel.saveContentOfModifiedFiles()
 
-        #close terminal subprocess
-        self.terminalPanel.killProcess()
         #close App
         self.ContainerWindow.destroy()
 
     def fileModified(self):
-        return self.TabsContainerObject.isFileBeingClosedModified()
+        return self.editorMainPanel.isFileBeingClosedModified()
 
     def atLeastOneFileModified(self):
-        return self.TabsContainerObject.atLeastOneFileModified()
+        return self.editorMainPanel.atLeastOneFileModified()
 
     def onSearchPattern(self, event):
         if self.findPanelShown == False:
@@ -126,65 +120,36 @@ class Editor:
 
     def searchInCurrentFile(self, pattern):
         print("currFile search")
-        self.TabsContainerObject.searchPatternInCurrentFile(pattern)
+        self.editorMainPanel.searchPatternInCurrentFile(pattern)
 
     def searchInOpenedFiles(self, pattern):
         print("openedFiles search")
-        self.TabsContainerObject.searchPatternInOpenedFiles(pattern)
+        self.editorMainPanel.searchPatternInOpenedFiles(pattern)
 
     def searchInAllFiles(self, pattern):
         print("allFiles search")
         pass
 
     def _save(self, event=None):
-        self.TabsContainerObject.saveCurrentFileContent()
+        self.editorMainPanel.saveCurrentFileContent()
 
     def _saveAll(self, event):
-        self.TabsContainerObject.saveAllOpenedFiles()
-
-    def onTerminalShowHide(self, event):
-        #toggle the show/hide state for terminal panel
-        if self.terminalShown == False:
-            #first we remove everything from the screen
-            self.fileMngr.pack_forget()
-            self.TabsContainerObject.pack_forget()
-            self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
-            self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
-            if self.fManagerShown == True:
-                self.fileMngr.pack(side=LEFT, anchor=N)
-                self.fManagerShown = True
-            self.terminalShown = True
-        else:
-            self.terminalPanel.pack_forget()
-            self.terminalShown = False
+        self.editorMainPanel.saveAllOpenedFiles()
 
     def onFileManagerShowHide(self, event):
         #toggle the show/hide state for terminal panel
         if self.fManagerShown == False:
             self.fileMngr.pack(side=LEFT, anchor=N)
+            self.editorMainPanel.pack_forget()
+            self.editorMainPanel.pack(fill=BOTH, expand=True)
             self.fManagerShown = True
         else:
             self.fileMngr.pack_forget()
             self.fManagerShown = False
 
-    def _refreshTerminal(self, event):
-        if self.terminalShown == True:
-            #first we remove everything from the screen
-            self.fileMngr.pack_forget()
-            self.TabsContainerObject.pack_forget()
-            self.terminalPanel.refreshTerminal()
-            self.terminalPanel.pack(side=BOTTOM, expand=True, fill=BOTH, anchor=S+W)
-            self.TabsContainerObject.pack(side=RIGHT, anchor=N, expand=True, fill=BOTH)
-            if self.fManagerShown == True:
-                self.fileMngr.pack(side=LEFT, anchor=N)
-                self.fManagerShown = True
-            self.terminalShown = True
-        else:
-            pass
-
     def findPanelClosed(self):
         self.findPanelShown = False
 
     #def _innest_closingFileEvent(self, event):
-        #filePath = self.TabsContainerObject.getActiveTabText()
-        #self.TabsContainerObject.closeFileRequestByKeyboard(filePath)
+        #filePath = self.editorMainPanel.getActiveTabText()
+        #self.editorMainPanel.closeFileRequestByKeyboard(filePath)

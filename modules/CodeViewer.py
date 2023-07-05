@@ -3,7 +3,6 @@ sys.path.insert(0, '../conf')
 import editortheme as et
 import tkinter as tk
 import sys
-sys.path.insert(0, '../conf')
 import fileViewer
 import os
 import re
@@ -31,13 +30,28 @@ class TextLineNumbers(tk.Canvas):
         i = self.textwidget.index("@0,0")
         while True :
             dline= self.textwidget.dlineinfo(i)
-            if dline is None: break
+            if dline is None:
+                #before exit from the loop, check if the row column has to be resized
+                self._resizeWidth(int(float(i)))
+                break
             y = dline[1]
             linenum = str(i).split(".")[0]
 
             self.create_text(2,y,anchor="nw", text=linenum, font=et.SelectedTheme["CodeLinesNumberFONT"], fill=et.SelectedTheme["CodeLinesColorFG"])
 
             i = self.textwidget.index("%s+1line" % i)
+
+    def _resizeWidth(self, rowIndex):
+        try:
+            if rowIndex < 100:
+                self.configure(width=30)
+            elif rowIndex >= 100 and rowIndex < 1000:
+                self.configure(width=40)
+            else:
+                self.configure(width=50)
+        except Exception as e:
+            # print(e)
+            pass
 
 class CodeText(fileViewer.FileViewer):
     def __init__(self, *args, **kwargs):
@@ -67,6 +81,8 @@ class CodeText(fileViewer.FileViewer):
         return result
 
     def contentModified(self, path):
+        if path == '':
+            return False
         f = open(path, "r")
         fLines = f.read().splitlines() #file lines
         tLines = self.get("1.0", tk.END).splitlines() #text lines
