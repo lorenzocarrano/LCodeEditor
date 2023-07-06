@@ -1,0 +1,3 @@
+[submodule "ThirdParty/TkTerm"]
+	path = ThirdParty/TkTerm
+	url = https://github.com/dhanoosu/tkterm
