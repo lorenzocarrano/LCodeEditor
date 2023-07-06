@@ -84,11 +84,15 @@ class CodeText(fileViewer.FileViewer):
         if path == '':
             return False
         f = open(path, "r")
-        fLines = f.read().splitlines() #file lines
+        # fLines = f.read().splitlines() #file lines
+        fLines = [line for line in f]
         tLines = self.get("1.0", tk.END).splitlines() #text lines
-
         if len(fLines) != len(tLines):
-            return True
+            if tLines[len(tLines)-1] == "" and len(tLines) == len(fLines) +1:
+                return False
+            else:
+                return True
+                
         for i in range(len(fLines)):
             if tLines[i] != fLines[i]:
                 return True

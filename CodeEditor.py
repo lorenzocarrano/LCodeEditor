@@ -78,7 +78,8 @@ class Editor:
         self.ForceCloseTab = False
 
         if flag == True:
-            self.openedFiles.remove(self.FileBeingClosed)
+            if self.FileBeingClosed in self.openedFiles:
+                self.openedFiles.remove(self.FileBeingClosed)
 
     def closeCurrentFile(self, event):
         self.ForceCloseTab = True
