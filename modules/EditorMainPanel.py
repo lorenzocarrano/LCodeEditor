@@ -42,6 +42,9 @@ class EditorMainPanel(Frame):
     # TabsContainer methods interface
     def add(self, widget, text):
         self.TabsContainerObject.add(widget, text=text)
+        lastAddedTabIndex = self.TabsContainerObject.index('end') -1
+        self.TabsContainerObject.select(lastAddedTabIndex)
+
 
     def removeTab(self, forceRemove=False):
         return self.TabsContainerObject.removeTab(forceRemove)
