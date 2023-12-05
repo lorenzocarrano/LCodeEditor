@@ -40,12 +40,22 @@ class Editor:
         self.SearchWindow = None #init
         self.ForceCloseTab = False #init
 
+        self.openNewFile()
+
     def _ExtractFileName(self, fileFullPath):
         fileNameIndexBeforeStart = fileFullPath.rfind('/')
         if fileNameIndexBeforeStart < 0:
             return fileFullPath
         else:
             return fileFullPath[fileNameIndexBeforeStart+1:]
+
+    def openNewFile(self):
+        path = ""
+        fileName = "new"
+        cViewer = CodeViewer()
+        cViewer.attachFile(path, [])
+        self.editorMainPanel.add(cViewer, text=fileName)
+        self.openedFiles.append((False, path))
 
     def openFile(self, path):
         if self.isFilePathInList(path) == False:

@@ -27,8 +27,6 @@ class EditorMainPanel(Frame):
 
         # Left listbox
         self.TabsContainerObject = TabsContainer(self, self.editorApp)
-        #self.cViewer = CodeViewer()
-        #self.TabsContainerObject.add(self.cViewer, text="new")
         self.TabsContainerObject.pack(side=LEFT)
         self.pw.add(self.TabsContainerObject)
 
