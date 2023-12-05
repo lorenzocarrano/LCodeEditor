@@ -104,7 +104,6 @@ class Editor:
     def getTabIDByFilePath(self, filePath):
         # since filePath is unique, the resulting list of tab names will always be composed of one element
         # for this reason just the first element is returned, being the unique id for the tab being focused.
-        print(self.openedFiles)
         tabID = -1
         for i in range(len(self.openedFiles)):
             if self.openedFiles[i][1] == filePath:
@@ -116,7 +115,6 @@ class Editor:
     def isFilePathInList(self, filePath):
         # since filePath is unique, the resulting list of tab names will always be composed of one element
         # for this reason just the first element is returned, being the unique string for the tab being focused.
-        print(self.openedFiles)
         tabID = self.getTabIDByFilePath(filePath)
         return tabID != -1
 
