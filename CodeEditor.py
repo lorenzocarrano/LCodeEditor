@@ -36,7 +36,7 @@ class Editor:
         root.bind("<Control-Shift-M>", self.onFileManagerShowHide)
         self.ContainerWindow = root
         self.openedFiles = []
-        self.FileBeingClosedTABName = "" #init
+        self.FileBeingClosedTABID = 0 #init
         self.SearchWindow = None #init
         self.ForceCloseTab = False #init
 
@@ -48,7 +48,7 @@ class Editor:
             return fileFullPath[fileNameIndexBeforeStart+1:]
 
     def openFile(self, path):
-        if path not in self.openedFiles:
+        if self.isFilePathInList(path) == False:
             try:
                 f = open(path, "r")
                 data = f.read()
@@ -56,18 +56,23 @@ class Editor:
                 cViewer.attachFile(path, data)
                 fileName = self._ExtractFileName(path)
                 self.editorMainPanel.add(cViewer, text=fileName)
-                tabName = self.editorMainPanel.getActiveTabName()
-                self.openedFiles.append((tabName, path))
+                tabID = self.editorMainPanel.getActiveTabID()
+                self.openedFiles.append((tabID, path))
             except Exception as e:
                 print("error", e)
                 return
+        else:
+            # if the file is already opened, set the tab containing it as the active tab
+            tabID = self.getTabIDByFilePath(path)
+            if tabID != -1:
+                self.editorMainPanel.setActiveTabByID(tabID)
 
         # next line should not be reached
         return None
-    def CloseFileRequested(self, tabName):
+    def CloseFileRequested(self, tabID):
         #stdoutMngr = StdOutManager()
         #stdoutMngr.stdoutPrint(data="CodeEditor: closeFile REQUESTED", endCharacter="\n")
-        self.FileBeingClosedTABName = tabName
+        self.FileBeingClosedTABID = tabID
         #mod = self.fileModified()
         #stdoutMngr.stdoutPrint(data=mod, endCharacter="\n")
         if self.fileModified() == True:
@@ -89,7 +94,7 @@ class Editor:
         self.ForceCloseTab = False
 
         if flag == True:
-            fileDescIndex = self.getFileDescIndexByTabName(self.FileBeingClosedTABName)
+            fileDescIndex = self.getFileDescIndexByTabID(self.FileBeingClosedTABID)
             if fileDescIndex >= 0:
                 del self.openedFiles[fileDescIndex]
 
@@ -97,7 +102,7 @@ class Editor:
         self.ForceCloseTab = True
         self.editorMainPanel.removeTabRequestedFromExternalEvent()
 
-    def getFileDescIndexByTabName(self, tabName):
+    def getFileDescIndexByTabID(self, tabName):
         # since tabName is unique, the resulting list of indexes will always be composed of one element
         # for this reason just the first element is returned, being the unique index for the file being closed.
         print(self.openedFiles)
@@ -106,6 +111,22 @@ class Editor:
             return l[0]
         else:
             return -1
+
+    def getTabIDByFilePath(self, filePath):
+        # since filePath is unique, the resulting list of tab names will always be composed of one element
+        # for this reason just the first element is returned, being the unique id for the tab being focused.
+        print(self.openedFiles)
+        l = [x for x, y in enumerate(self.openedFiles) if y[1] == filePath]
+        if len(l) == 1:
+            return self.openedFiles[l[0]][0]
+        else:
+            return -1
+
+    def isFilePathInList(self, filePath):
+        # since filePath is unique, the resulting list of tab names will always be composed of one element
+        # for this reason just the first element is returned, being the unique string for the tab being focused.
+        print(self.openedFiles)
+        return len([x for x, y in enumerate(self.openedFiles) if y[1] == filePath]) != 0
 
     def onClosingWindow(self):
         if self.atLeastOneFileModified():

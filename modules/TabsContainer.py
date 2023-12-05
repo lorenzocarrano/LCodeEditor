@@ -54,8 +54,7 @@ class TabsContainer(ttk.Notebook):
 
         index = self.index("@%d,%d" % (event.x, event.y))
         self.indexToEventuallyRemove = index
-        tabName = self.select()
-        self.editorApp.CloseFileRequested(tabName)
+        self.editorApp.CloseFileRequested(index)
 
     def removeTab(self, forceRemove=False):
         #forceRemove is True when close request is triggered by an external event and not clicking on the X icon on the tab
@@ -80,8 +79,7 @@ class TabsContainer(ttk.Notebook):
     def removeTabRequestedFromExternalEvent(self):
         index = self.index("current")
         self.indexToEventuallyRemove = index
-        tabName = self.select()
-        self.editorApp.CloseFileRequested(tabName)
+        self.editorApp.CloseFileRequested(index)
 
     def atLeastOneFileModified(self):
         self.tabWithModifiedFiles = []

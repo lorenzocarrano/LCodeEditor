@@ -53,8 +53,11 @@ class EditorMainPanel(Frame):
     def getActiveTabText(self):
         return self.TabsContainerObject.getActiveTabText()
 
-    def getActiveTabName(self):
-        return self.TabsContainerObject.select()
+    def getActiveTabID(self):
+        return self.TabsContainerObject.index('current')
+
+    def setActiveTabByID(self, tabID):
+        self.TabsContainerObject.select(tabID)
 
     def removeTabRequestedFromExternalEvent(self):
         self.TabsContainerObject.removeTabRequestedFromExternalEvent()
