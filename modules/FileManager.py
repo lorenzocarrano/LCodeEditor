@@ -15,7 +15,8 @@ class FileManager(tk.Frame):
         style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})]) # Remove the borders
         #code
         tk.Frame.__init__(self, rootWindow)
-        self.tree = ttk.Treeview(self, style="mystyle.Treeview")
+        print(rootWindow.winfo_width())
+        self.tree = ttk.Treeview(self, style="mystyle.Treeview", height=50)
 
         ysb = ttk.Scrollbar(self, orient='vertical', command=self.tree.yview)
         xsb = ttk.Scrollbar(self, orient='horizontal', command=self.tree.xview)
