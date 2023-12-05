@@ -108,7 +108,7 @@ class Editor:
         tabID = -1
         for i in range(len(self.openedFiles)):
             if self.openedFiles[i][1] == filePath:
-                tabID = self.openedFiles[i][0]
+                tabID = i
                 break
 
         return tabID
