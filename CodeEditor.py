@@ -69,6 +69,7 @@ class Editor:
 
         # next line should not be reached
         return None
+
     def CloseFileRequested(self, tabID):
         #stdoutMngr = StdOutManager()
         #stdoutMngr.stdoutPrint(data="CodeEditor: closeFile REQUESTED", endCharacter="\n")
@@ -102,31 +103,36 @@ class Editor:
         self.ForceCloseTab = True
         self.editorMainPanel.removeTabRequestedFromExternalEvent()
 
-    def getFileDescIndexByTabID(self, tabName):
+    def getFileDescIndexByTabID(self, tabID):
         # since tabName is unique, the resulting list of indexes will always be composed of one element
         # for this reason just the first element is returned, being the unique index for the file being closed.
         print(self.openedFiles)
-        l = [x for x, y in enumerate(self.openedFiles) if y[0] == tabName]
-        if len(l) == 1:
-            return l[0]
-        else:
-            return -1
+        index = -1
+        for i in range(len(self.openedFiles)):
+            if self.openedFiles[i][0] == tabID:
+                index = i
+                break
+
+        return index
 
     def getTabIDByFilePath(self, filePath):
         # since filePath is unique, the resulting list of tab names will always be composed of one element
         # for this reason just the first element is returned, being the unique id for the tab being focused.
         print(self.openedFiles)
-        l = [x for x, y in enumerate(self.openedFiles) if y[1] == filePath]
-        if len(l) == 1:
-            return self.openedFiles[l[0]][0]
-        else:
-            return -1
+        tabID = -1
+        for i in range(len(self.openedFiles)):
+            if self.openedFiles[i][1] == filePath:
+                tabID = self.openedFiles[i][0]
+                break
+
+        return tabID
 
     def isFilePathInList(self, filePath):
         # since filePath is unique, the resulting list of tab names will always be composed of one element
         # for this reason just the first element is returned, being the unique string for the tab being focused.
         print(self.openedFiles)
-        return len([x for x, y in enumerate(self.openedFiles) if y[1] == filePath]) != 0
+        tabID = self.getTabIDByFilePath(filePath)
+        return tabID != -1
 
     def onClosingWindow(self):
         if self.atLeastOneFileModified():
