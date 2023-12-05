@@ -50,7 +50,9 @@ class Editor:
             return fileFullPath[fileNameIndexBeforeStart+1:]
 
     def openNewFile(self):
+        #path = "./new"
         path = ""
+        #fileName = self._ExtractFileName(path)
         fileName = "new"
         cViewer = CodeViewer()
         cViewer.attachFile(path, [])
