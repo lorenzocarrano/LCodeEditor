@@ -57,7 +57,7 @@ class Editor:
                 fileName = self._ExtractFileName(path)
                 self.editorMainPanel.add(cViewer, text=fileName)
                 tabID = self.editorMainPanel.getActiveTabID()
-                self.openedFiles.append((tabID, path))
+                self.openedFiles.append((True, path))
             except Exception as e:
                 print("error", e)
                 return
@@ -95,25 +95,11 @@ class Editor:
         self.ForceCloseTab = False
 
         if flag == True:
-            fileDescIndex = self.getFileDescIndexByTabID(self.FileBeingClosedTABID)
-            if fileDescIndex >= 0:
-                del self.openedFiles[fileDescIndex]
+            del self.openedFiles[self.FileBeingClosedTABID]
 
     def closeCurrentFile(self, event):
         self.ForceCloseTab = True
         self.editorMainPanel.removeTabRequestedFromExternalEvent()
-
-    def getFileDescIndexByTabID(self, tabID):
-        # since tabName is unique, the resulting list of indexes will always be composed of one element
-        # for this reason just the first element is returned, being the unique index for the file being closed.
-        print(self.openedFiles)
-        index = -1
-        for i in range(len(self.openedFiles)):
-            if self.openedFiles[i][0] == tabID:
-                index = i
-                break
-
-        return index
 
     def getTabIDByFilePath(self, filePath):
         # since filePath is unique, the resulting list of tab names will always be composed of one element
