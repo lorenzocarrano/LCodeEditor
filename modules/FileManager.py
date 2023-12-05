@@ -2,7 +2,6 @@ import editortheme as et
 import os
 import tkinter as tk
 import tkinter.ttk as ttk
-import tkinter.font as tkFont
 
 class FileManager(tk.Frame):
     def __init__(self, rootWindow, path, containerWidget = ""):
