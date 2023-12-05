@@ -17,8 +17,6 @@ class EditorMainPanel(Frame):
 
         self.editorApp = editorApp
 
-        self.TabsStorageInfo = {}
-
         # change style to classic (Windows only)
         # to show the sash and handle
         self.style = ttk.Style()
@@ -44,26 +42,19 @@ class EditorMainPanel(Frame):
 
     # TabsContainer methods interface
     def add(self, widget, text):
-        fileName = self._ExtractFileName(text)
-        self.TabsContainerObject.add(widget, text=fileName)
+        self.TabsContainerObject.add(widget, text=text)
 
         lastAddedTabIndex = self.TabsContainerObject.index('end') - 1
         self.TabsContainerObject.select(lastAddedTabIndex)
-
-        self.TabsStorageInfo[self.TabsContainerObject.select()] = (text, fileName)
-
-    def _ExtractFileName(self, fileFullPath):
-        fileNameIndexBeforeStart = fileFullPath.rfind('/')
-        if fileNameIndexBeforeStart < 0:
-            return fileFullPath
-        else:
-            return fileFullPath[fileNameIndexBeforeStart+1:]
 
     def removeTab(self, forceRemove=False):
         return self.TabsContainerObject.removeTab(forceRemove)
 
     def getActiveTabText(self):
-         self.TabsContainerObject.getActiveTabText()
+        return self.TabsContainerObject.getActiveTabText()
+
+    def getActiveTabName(self):
+        return self.TabsContainerObject.select()
 
     def removeTabRequestedFromExternalEvent(self):
         self.TabsContainerObject.removeTabRequestedFromExternalEvent()
