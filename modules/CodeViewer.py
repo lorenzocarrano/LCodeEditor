@@ -84,15 +84,15 @@ class CodeText(fileViewer.FileViewer):
         if path == '':
             return False
         f = open(path, "r")
-        # fLines = f.read().splitlines() #file lines
+        # fLines = f.read().splitlines() # file lines
         fLines = [line for line in f]
+        if fLines[-1][-1] == '\n' or fLines[-1][-1] == '\r':
+            fLines.append("")
+        fLines = [line.rstrip() for line in fLines]
         tLines = self.get("1.0", tk.END).splitlines() #text lines
         if len(fLines) != len(tLines):
-            if tLines[len(tLines)-1] == "" and len(tLines) == len(fLines) +1:
-                return False
-            else:
-                return True
-                
+            return True
+
         for i in range(len(fLines)):
             if tLines[i] != fLines[i]:
                 return True
@@ -145,11 +145,11 @@ class CodeViewer(tk.Frame):
         self.vsb.pack(side="right", fill="y")
         self.linenumbers.pack(side="left", fill="y")
         self.text.pack(side="right", fill="both", expand=True)
-        #bind on generated events
+        # bind on generated events
         self.text.bind("<<Change>>", self._on_change)
         self.text.bind("<Configure>", self._on_change)
 
-        self.displayedFile =  ""
+        self.displayedFile = ""
 
     def _on_change(self, event):
         self.linenumbers.redraw()
@@ -184,22 +184,22 @@ class CodeViewer(tk.Frame):
         #self.text.highlightExactMatches(pattern)
 
     def getPatternOccurrencies(self, pattern):
-        #return a list of tuples containing the pattern's matches
+        # return a list of tuples containing the pattern's matches
         self.text.getPatternOccurrencies(pattern)
         pass
 
     def _syntaxSetup(self):
-        #set the right syntax highlighting depending on detected language
-        #get the file extension
+        # set the right syntax highlighting depending on detected language
+        # get the file extension
         fileExtension = self._getFileExtension(self.displayedFile)
-        #get the index for the syntax highlightinh configuration
+        # get the index for the syntax highlightinh configuration
         index = self._syntaxHighlightingConfiguration(fileExtension)
-        #prepare a regular expression (language-dependent)
+        # prepare a regular expression (language-dependent)
         if index >= 0:
             try:
                 regex = regexList[index]
 
-                #apply tags
+                # apply tags
                 applyTagCalls[index](self)
             except:
                 pass

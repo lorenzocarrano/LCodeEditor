@@ -78,6 +78,9 @@ class FileManager(tk.Frame):
             oid = self.tree.insert(parent, 'end', text=p, open=False)
             if isdir:
                 self.process_directory(oid, relpath)
+
+    def GetAll(self):
+        return self.tree.get_children()
 '''
 root = tk.Tk()
 path_to_my_project = "./../"
