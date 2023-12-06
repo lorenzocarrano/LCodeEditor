@@ -6,7 +6,7 @@ import sys
 import fileViewer
 import os
 import re
-from syntaxconf import regexList, applyTagCalls, CExtensionsList, PyExtensionsList
+from syntaxconf import regexList, applyTagCalls, extensionLists
 from StdOutManager import StdOutManager
 
 class TextLineNumbers(tk.Canvas):
@@ -195,13 +195,15 @@ class CodeViewer(tk.Frame):
         #get the index for the syntax highlightinh configuration
         index = self._syntaxHighlightingConfiguration(fileExtension)
         #prepare a regular expression (language-dependent)
-        try:
-            regex = regexList[index]
+        if index >= 0:
+            try:
+                regex = regexList[index]
 
-            #apply tags
-            applyTagCalls[index](self)
-        except:
-            pass
+                #apply tags
+                applyTagCalls[index](self)
+            except:
+                pass
+
     def _getFileExtension(self, fPath):
         # this will return a tuple of root and extension
         split_tup = os.path.splitext(fPath)
@@ -216,10 +218,9 @@ class CodeViewer(tk.Frame):
             text_widget.tag_config(tag, foreground=color)
 
     def _syntaxHighlightingConfiguration(self, extension):
-        if extension in CExtensionsList:
-            return 0
-        elif extension in PyExtensionsList:
-            return 1
-        else:
-            return 2
+        eRet = -1
+        for i in range(len(extensionLists)):
+            if extension in extensionLists[i]:
+                eRet = i
 
+        return eRet

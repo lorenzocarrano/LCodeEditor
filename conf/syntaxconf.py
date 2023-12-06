@@ -328,6 +328,7 @@ def applyVHDL_Tags(code):
                     )
 
 
-#lists
+# lists
+extensionLists = [CExtensionsList, PyExtensionsList, VHDLExtensionsList]
 regexList = [Cregex, Pyregex, VHDLregex]
 applyTagCalls = [applyC_Tags, applyPy_Tags, applyVHDL_Tags]
