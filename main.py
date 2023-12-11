@@ -23,7 +23,6 @@ def main():
         print('uncorrect parameters number')
         return
     root = Tk()
-    #root.overrideredirect(True)
 
     root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
     root.configure(bg=et.SelectedTheme["MainWindowBG"])

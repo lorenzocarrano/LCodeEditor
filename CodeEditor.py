@@ -34,6 +34,10 @@ class Editor:
         root.bind("<Control-f>", self.onSearchPattern)
         #bind show/hide FileManager panel
         root.bind("<Control-Shift-M>", self.onFileManagerShowHide)
+        #full screen
+        root.bind("<Control-Alt-f>", self.toggleFullScreenMode)
+        self.FullScreenMode = False
+
         self.ContainerWindow = root
         self.openedFiles = []
         self.FileBeingClosedTABID = 0 #init
@@ -41,6 +45,15 @@ class Editor:
         self.ForceCloseTab = False #init
 
         self.openNewFile()
+
+    def toggleFullScreenMode(self, event):
+        if self.FullScreenMode == False:
+            self.ContainerWindow.overrideredirect(True)
+            self.FullScreenMode = True
+        else:
+            self.ContainerWindow.overrideredirect(False)
+            self.FullScreenMode = False
+
 
     def _ExtractFileName(self, fileFullPath):
         fileNameIndexBeforeStart = fileFullPath.rfind('/')
