@@ -45,6 +45,9 @@ class EditorMainPanel(Frame):
         lastAddedTabIndex = self.TabsContainerObject.index('end') - 1
         self.TabsContainerObject.select(lastAddedTabIndex)
 
+    def removeTagInCurrentFile(self, tag, region='end'):
+        self.TabsContainerObject.removeTagInCurrentFile(tag, region)
+
     def removeTab(self, forceRemove=False):
         return self.TabsContainerObject.removeTab(forceRemove)
 

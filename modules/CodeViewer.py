@@ -99,8 +99,6 @@ class CodeText(fileViewer.FileViewer):
 
         return False
 
-
-
     def highlightMatches(self, pattern):
         self.tag_remove('found', '1.0', tk.END)
         ser = pattern
@@ -115,6 +113,9 @@ class CodeText(fileViewer.FileViewer):
                 self.tag_add('found', idx, lastidx)
                 idx = lastidx
             self.tag_config('found', foreground=et.SelectedTheme["SearchedTextFG"], background=et.SelectedTheme["SearchedTextBG"])
+
+    def testMethod(self):
+        pass
 
     def getPatternOccurrencies(self, pattern):
         ser = pattern
@@ -187,6 +188,12 @@ class CodeViewer(tk.Frame):
         # return a list of tuples containing the pattern's matches
         self.text.getPatternOccurrencies(pattern)
         pass
+
+    def removeTag(self, tag, region='end'):
+        if region == 'end':
+            self.text.tag_remove(tag, '1.0', tk.END)
+        else:
+            pass
 
     def _syntaxSetup(self):
         # set the right syntax highlighting depending on detected language

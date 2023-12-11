@@ -207,6 +207,7 @@ class Editor:
             self.fManagerShown = False
 
     def findPanelClosed(self):
+        self.editorMainPanel.removeTagInCurrentFile('found')
         self.findPanelShown = False
 
     #def _innest_closingFileEvent(self, event):
